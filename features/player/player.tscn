@@ -10,6 +10,7 @@
 
 [node name="Player" type="CharacterBody3D" unique_id=1101528458]
 script = ExtResource("1_sjcu7")
+sprint_speed = 19.44
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1465545111]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://do4fbvnml1hxn"]
+
+[ext_resource type="Script" uid="uid://dpf220767gf0n" path="res://sub_viewport_container.gd" id="1_6vymn"]
+[ext_resource type="Shader" uid="uid://nvji32yp285v" path="res://assets/shaders/psx_post.gdshader" id="1_vwfi5"]
+[ext_resource type="PackedScene" uid="uid://ccrqnpbosvrqa" path="res://features/world/world.tscn" id="2_vwfi5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_emvbc"]
+shader = ExtResource("1_vwfi5")
+shader_parameter/color_levels = 32.0
+shader_parameter/dithering = true
+shader_parameter/dither_strength = 1.0
+
+[node name="Main" type="Node3D" unique_id=2024049704]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1768513678]
+texture_filter = 1
+material = SubResource("ShaderMaterial_emvbc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6vymn")
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=129261547]
+
+[node name="World" parent="SubViewportContainer/SubViewport" unique_id=1646113466 instance=ExtResource("2_vwfi5")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=2118223018]
