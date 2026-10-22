@@ -1,0 +1,95 @@
+extends Node
+
+## Pure, serializable game model. Single source of truth (save + network sync).
+## Only Commands should call the mutating methods.
+
+var _resources: Dictionary[StringName, int] = {}
+var _world_items: Dictionary[int, Dictionary] = {}
+var _next_entity_id: int = 1
+
+#region Resources
+
+func get_amount(resource_id: StringName) -> int:
+	return _resources.get(resource_id, 0)
+
+func add_resource(resource_id: StringName, amount: int) -> void:
+	_resources[resource_id] = get_amount(resource_id) + amount
+	EventBus.resource_changed.emit(resource_id, _resources[resource_id])
+
+func try_spend(resource_id: StringName, amount: int) -> bool:
+	if get_amount(resource_id) < amount:
+		return false
+	add_resource(resource_id, -amount)
+	return true
+
+#endregion
+
+#region World items
+
+func spawn_world_item(item_id: StringName, position: Vector3) -> int:
+	var entity_id: int = _next_entity_id
+	_next_entity_id += 1
+	_world_items[entity_id] = {"item_id": item_id, "position": position}
+	EventBus.world_item_spawned.emit(entity_id, item_id, position)
+	return entity_id
+
+func remove_world_item(entity_id: int) -> bool:
+	if not _world_items.erase(entity_id):
+		return false
+	EventBus.world_item_removed.emit(entity_id)
+	return true
+
+func get_world_item(entity_id: int) -> Dictionary:
+	return _world_items.get(entity_id, {})
+
+func get_world_item_count() -> int:
+	return _world_items.size()
+
+#endregion
+
+#region Serialization
+
+func to_dict() -> Dictionary:
+	var resources: Dictionary = {}
+	for resource_id in _resources:
+		resources[String(resource_id)] = _resources[resource_id]
+
+	var world_items: Dictionary = {}
+	for entity_id in _world_items:
+		var item: Dictionary = _world_items[entity_id]
+		var p: Vector3 = item["position"]
+		world_items[str(entity_id)] = {
+			"item_id": String(item["item_id"]),
+			"position": [p.x, p.y, p.z],
+		}
+
+	return {
+		"resources": resources,
+		"world_items": world_items,
+		"next_entity_id": _next_entity_id,
+	}
+
+func from_dict(data: Dictionary) -> void:
+	# Clear current world items so views are removed too
+	for entity_id in _world_items.keys():
+		remove_world_item(entity_id)
+
+	_resources.clear()
+	var resources: Dictionary = data.get("resources", {})
+	for key in resources:
+		_resources[StringName(key)] = int(resources[key])
+		EventBus.resource_changed.emit(StringName(key), _resources[StringName(key)])
+
+	var world_items: Dictionary = data.get("world_items", {})
+	for key in world_items:
+		var item: Dictionary = world_items[key]
+		var p: Array = item.get("position", [0.0, 0.0, 0.0])
+		var entity_id: int = int(key)
+		var item_id: StringName = StringName(item.get("item_id", ""))
+		var position: Vector3 = Vector3(p[0], p[1], p[2])
+		_world_items[entity_id] = {"item_id": item_id, "position": position}
+		EventBus.world_item_spawned.emit(entity_id, item_id, position)
+
+	_next_entity_id = int(data.get("next_entity_id", 1))
+
+#endregion 

@@ -89,7 +89,7 @@ subdivide_depth = 400
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tvcnf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_1pyse"]
-size = Vector3(0.5997009, 33.382324, 0.43881226)
+size = Vector3(0.5997009, 29.941128, 0.43881226)
 
 [sub_resource type="BoxMesh" id="BoxMesh_yp3gy"]
 
@@ -146,7 +146,7 @@ mesh = SubResource("ArrayMesh_07nrn")
 shape = SubResource("ConvexPolygonShape3D_k5gkm")
 
 [node name="Player" parent="." unique_id=1101528458 instance=ExtResource("1_vqgh6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.528343, 19.010544, -2.714983)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.003603, 14.655777, 1.0093021)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=399614966]
 environment = SubResource("Environment_1pyse")
@@ -164,9 +164,9 @@ physics_material = SubResource("PhysicsMaterial_tvcnf")
 
 [node name="FishingSpot" parent="." unique_id=611738445 instance=ExtResource("4_vjnib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.804588, 0, 0)
-prompt_offset = Vector3(0, 0.05, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FishingSpot" unique_id=1690854089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0319386, 0)
 mesh = SubResource("BoxMesh_1pyse")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="FishingSpot" unique_id=1431568594]
@@ -176,3 +176,5 @@ mesh = SubResource("BoxMesh_yp3gy")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FishingSpot" unique_id=256114388]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.889273, 0)
 shape = SubResource("ConcavePolygonShape3D_8a8xh")
+
+[node name="SpawnPoint" type="Marker3D" parent="FishingSpot" unique_id=591956773]

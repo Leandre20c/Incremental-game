@@ -39,10 +39,12 @@ func _update_focus() -> void:
 	var next: InteractableBody = get_collider() as InteractableBody if is_colliding() else null
 	if next == _current:
 		return
+	
 	if _current:
 		_current.unfocus(player_id)
 	_current = next
 	_reset_hold()
+	
 	if _current:
 		_current.focus(player_id)
 	focus_changed.emit(_current)

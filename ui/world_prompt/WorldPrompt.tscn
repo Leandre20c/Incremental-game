@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://drp6girpbyyuf"]
 
 [ext_resource type="Script" uid="uid://o8d04utnhr6a" path="res://ui/world_prompt/world_prompt.gd" id="1_oejbh"]
-[ext_resource type="Texture2D" uid="uid://droiunvq8e0fu" path="res://icon.svg" id="2_w4oyy"]
 
 [node name="WorldPrompt" type="Node3D" unique_id=1764673981]
 script = ExtResource("1_oejbh")
@@ -40,4 +39,8 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1856418568]
-texture = ExtResource("2_w4oyy")
+pixel_size = 0.005
+billboard = 2
+shaded = true
+no_depth_test = true
+texture_filter = 0
