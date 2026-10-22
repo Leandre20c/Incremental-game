@@ -14,6 +14,7 @@ func _init(p_player_id: int = 1, p_item_id: StringName = &"", p_amount: int = 1,
 
 func execute() -> bool:
 	if amount <= 0 or ItemDatabase.get_definition(item_id) == null:
+		push_warning(item_id, " not found")
 		return false
 	for i in amount:
 		GameState.spawn_world_item(item_id, spawn_position)

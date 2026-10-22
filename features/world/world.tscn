@@ -2,10 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://dtls67rmuyhq1" path="res://features/player/player.tscn" id="1_vqgh6"]
 [ext_resource type="Shader" uid="uid://ewch7j8uno7c" path="res://assets/shaders/ocean_surface.gdshader" id="2_8a8xh"]
+[ext_resource type="Texture2D" uid="uid://bh3lovvcb11he" path="res://assets/PSX Textures/256/Color Maps/metal_roof_tx_1_1.png" id="2_hqx54"]
 [ext_resource type="Texture2D" uid="uid://cc7bu8k61vqmr" path="res://assets/shaders/clear+sea+water-2048x2048.png" id="3_8a8xh"]
+[ext_resource type="Texture2D" uid="uid://25ntub0lxo1o" path="res://assets/PSX Textures/256/Color Maps/concrete_3.png" id="3_gb2pg"]
 [ext_resource type="PackedScene" uid="uid://dbpx5f1pfymh2" path="res://components/interactable/interactable_base.tscn" id="4_vjnib"]
+[ext_resource type="Script" uid="uid://bp1pkjej5m7uq" path="res://features/items/world_item_spawner.gd" id="5_07nrn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ub5rx"]
+albedo_texture = ExtResource("2_hqx54")
+uv1_scale = Vector3(4.02, 4.02, 4.02)
 
 [sub_resource type="PrismMesh" id="PrismMesh_yp3gy"]
 material = SubResource("StandardMaterial3D_ub5rx")
@@ -41,6 +46,13 @@ _surfaces = [{
 "vertex_count": 48,
 "vertex_data": PackedByteArray("t/qswAAAIMC8qo2/pPB7wAAAIEBI6JTApPB7wAAAIMBI6JTApPB7wAAAIMBI6JTAbqvHvgAAIECu6sPAbqvHvgAAIMCu6sPAo/B7wAAAIMDZJRxAt/qswAAAIEC8qo2/t/qswAAAIMC8qo2/d6vHvgAAIMCkKnpAo/B7wAAAIEDZJRxAo/B7wAAAIMDZJRxAt/qswAAAIMC8qo2/t/qswAAAIEC8qo2/pPB7wAAAIEBI6JTApPB7wAAAIMBI6JTApPB7wAAAIEBI6JTAbqvHvgAAIECu6sPAo/B7wAAAIMDZJRxAo/B7wAAAIEDZJRxAt/qswAAAIEC8qo2/o/B7wAAAIEDZJRxAd6vHvgAAIMCkKnpAd6vHvgAAIECkKnpAbqvHvgAAIMCu6sPAxAVKQAAAIEBK6JTAxAVKQAAAIMBK6JTAxAVKQAAAIMBK6JTASQWUQAAAIEC4qo2/SQWUQAAAIMC4qo2/d6vHvgAAIMCkKnpAxwVKQAAAIMDZJRxAd6vHvgAAIECkKnpASQWUQAAAIMC4qo2/xwVKQAAAIEDZJRxAxwVKQAAAIMDZJRxAbqvHvgAAIMCu6sPAbqvHvgAAIECu6sPAxAVKQAAAIEBK6JTAxAVKQAAAIMBK6JTAxAVKQAAAIEBK6JTASQWUQAAAIEC4qo2/d6vHvgAAIECkKnpAxwVKQAAAIMDZJRxAxwVKQAAAIEDZJRxASQWUQAAAIMC4qo2/SQWUQAAAIEC4qo2/xwVKQAAAIEDZJRxAd/D/f///wwfVyP9///+UGym3/3///2okKbf/f///aiSGj/9///88OHhw/3938P8///8ptwAAlBv//4aPAADDB3fw/3///8MH//938AAAPDj//9XIAABqJP//KbcAAJQbd/D/f///wwf//4aPAADDB9XI/3///5QbKbf/f///aiTVyP9///+UG4aP/3///zw4//8ptwAAlBv//9XIAABqJP//ho8AAMMH///VyAAAaiT//3fwAAA8OAAAd/CHD/8/eHD/f3fw/z/VSP9/1cj/Pyk3/38pt/8/KTf/fwAAauSHD/9/AAA7+AAAho///zv4//938AAAPDgAANXIKTf/PwAAd/CHD/8/AACGj3hw/z8AACm31Uj/PwAA1cgpN/8/eHD/f3fw/z+Gj/9///88ONVI/3/VyP8/KTf/fwAAauTVSP9/AACU24cP/38AADv4AAB38IcP/z8AANXIKTf/PwAAKbfVSP8/AACGj3hw/z+HD/9/ho//PwAAKbfVSP8/")
 }]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jeswc"]
+albedo_texture = ExtResource("3_gb2pg")
+uv1_scale = Vector3(15, 15, 15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_imlyp"]
+albedo_texture = ExtResource("3_gb2pg")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_k5gkm"]
 points = PackedVector3Array(-27.5, -2.5, -27.5, -27.5, -2.5, 27.5, -27.5, 2.5, -27.5, 27.5, -2.5, -27.5, -27.5, 2.5, 27.5, 27.5, -2.5, 27.5, 27.5, 2.5, -27.5, 27.5, 2.5, 27.5)
@@ -98,6 +110,9 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 
 [node name="World" type="Node3D" unique_id=1646113466]
 
+[node name="WorldItemSpawner" type="Node3D" parent="." unique_id=624089027]
+script = ExtResource("5_07nrn")
+
 [node name="Pillars" type="StaticBody3D" parent="." unique_id=1474502528]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6779613, 0)
 
@@ -141,6 +156,8 @@ height = 13.352051
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=325783188]
 mesh = SubResource("ArrayMesh_07nrn")
+surface_material_override/0 = SubResource("StandardMaterial3D_jeswc")
+surface_material_override/1 = SubResource("StandardMaterial3D_imlyp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=9905211]
 shape = SubResource("ConvexPolygonShape3D_k5gkm")
@@ -164,6 +181,8 @@ physics_material = SubResource("PhysicsMaterial_tvcnf")
 
 [node name="FishingSpot" parent="." unique_id=611738445 instance=ExtResource("4_vjnib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.804588, 0, 0)
+prompt_offset = Vector3(0, 15.5, 0)
+hold_duration = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FishingSpot" unique_id=1690854089]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0319386, 0)
@@ -178,3 +197,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.889273, 0)
 shape = SubResource("ConcavePolygonShape3D_8a8xh")
 
 [node name="SpawnPoint" type="Marker3D" parent="FishingSpot" unique_id=591956773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1692524, 15.093727, -0.1954062)
