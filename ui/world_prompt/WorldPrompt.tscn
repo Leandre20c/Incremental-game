@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://drp6girpbyyuf"]
+
+[ext_resource type="Script" uid="uid://o8d04utnhr6a" path="res://ui/world_prompt/world_prompt.gd" id="1_oejbh"]
+[ext_resource type="Texture2D" uid="uid://droiunvq8e0fu" path="res://icon.svg" id="2_w4oyy"]
+
+[node name="WorldPrompt" type="Node3D" unique_id=1764673981]
+script = ExtResource("1_oejbh")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=204431109]
+disable_3d = true
+transparent_bg = true
+gui_disable_input = true
+size = Vector2i(192, 96)
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewport" unique_id=1471628486]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/CenterContainer" unique_id=2115131147]
+layout_mode = 2
+
+[node name="PromptLabel" type="Label" parent="SubViewport/CenterContainer/VBoxContainer" unique_id=673417518]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hey"
+
+[node name="HoldLabel" type="Label" parent="SubViewport/CenterContainer/VBoxContainer" unique_id=474333043]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hold"
+
+[node name="HoldProgress" type="ProgressBar" parent="SubViewport/CenterContainer/VBoxContainer" unique_id=1897470395]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1856418568]
+texture = ExtResource("2_w4oyy")

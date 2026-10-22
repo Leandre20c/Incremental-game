@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8f7xxdebprfd" path="res://features/player/player.gd" id="1_sjcu7"]
 [ext_resource type="Script" uid="uid://cfamedi7xdxeo" path="res://features/player/player_interaction.gd" id="2_fcb3x"]
+[ext_resource type="PackedScene" uid="uid://drp6girpbyyuf" path="res://ui/world_prompt/WorldPrompt.tscn" id="3_emvbc"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1pyse"]
 
@@ -28,3 +29,6 @@ target_position = Vector3(0, 0, -4)
 script = ExtResource("2_fcb3x")
 
 [node name="InteractionHandler" type="Node3D" parent="." unique_id=1293990205]
+
+[node name="WorldPrompt" parent="." unique_id=1764673981 node_paths=PackedStringArray("interaction") instance=ExtResource("3_emvbc")]
+interaction = NodePath("../CameraPivot/Camera3D/InteractionRayCast")

@@ -1,13 +1,11 @@
 [gd_scene format=4 uid="uid://ccrqnpbosvrqa"]
 
-[ext_resource type="Texture2D" uid="uid://bh3lovvcb11he" path="res://assets/PSX Textures/256/Color Maps/metal_roof_tx_1_1.png" id="1_07nrn"]
 [ext_resource type="PackedScene" uid="uid://dtls67rmuyhq1" path="res://features/player/player.tscn" id="1_vqgh6"]
-[ext_resource type="Texture2D" uid="uid://cdk27d0hj8h6a" path="res://assets/PSX Textures/256/Color Maps/concrete_2.png" id="2_07nrn"]
-[ext_resource type="Shader" uid="uid://ewch7j8uno7c" path="res://assets/ocean_surface/ocean_surface.gdshader" id="2_8a8xh"]
-[ext_resource type="Texture2D" uid="uid://cc7bu8k61vqmr" path="res://core/commands/ocean_surface/clear+sea+water-2048x2048.png" id="3_vjnib"]
+[ext_resource type="Shader" uid="uid://ewch7j8uno7c" path="res://assets/shaders/ocean_surface.gdshader" id="2_8a8xh"]
+[ext_resource type="Texture2D" uid="uid://cc7bu8k61vqmr" path="res://assets/shaders/clear+sea+water-2048x2048.png" id="3_8a8xh"]
+[ext_resource type="PackedScene" uid="uid://dbpx5f1pfymh2" path="res://components/interactable/interactable_base.tscn" id="4_vjnib"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ub5rx"]
-albedo_texture = ExtResource("1_07nrn")
 
 [sub_resource type="PrismMesh" id="PrismMesh_yp3gy"]
 material = SubResource("StandardMaterial3D_ub5rx")
@@ -23,7 +21,6 @@ points = PackedVector3Array(-0.5, -0.44, -0.5, -0.5, -0.44, 0.5, 0, 0.43999994, 
 points = PackedVector3Array(-0.5, -0.44, -0.5, -0.5, -0.44, 0.5, 0, 0.43999994, -0.5, 0.5, -0.44, -0.5, 0.5, -0.44, 0.5, 0, 0.43999994, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipd0c"]
-albedo_texture = ExtResource("2_07nrn")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_07nrn"]
 _surfaces = [{
@@ -60,27 +57,26 @@ background_mode = 2
 sky = SubResource("Sky_yp3gy")
 ambient_light_source = 3
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_3geb7"]
-frequency = 0.03
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_c2w3o"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wvc5e"]
-noise = SubResource("FastNoiseLite_3geb7")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_eco6r"]
+noise = SubResource("FastNoiseLite_c2w3o")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yp3gy"]
 render_priority = 0
 shader = ExtResource("2_8a8xh")
-shader_parameter/albedo = Color(0.25431713, 0.3692084, 0.49387687, 1)
-shader_parameter/water_texture1 = ExtResource("3_vjnib")
-shader_parameter/water_texture2 = ExtResource("3_vjnib")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_wvc5e")
-shader_parameter/scroll_speed1 = Vector2(0.05, 0.01)
+shader_parameter/albedo = Color(0.25312898, 0.40151754, 0.55498, 1)
+shader_parameter/water_texture1 = ExtResource("3_8a8xh")
+shader_parameter/water_texture2 = ExtResource("3_8a8xh")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_eco6r")
+shader_parameter/scroll_speed1 = Vector2(0.05, 0.055)
 shader_parameter/scroll_speed2 = Vector2(-0.03, 0)
 shader_parameter/blend_factor = 0.5
-shader_parameter/scale1 = Vector2(50, 50)
-shader_parameter/scale2 = Vector2(50, 50)
-shader_parameter/wave_strength = 6.5
-shader_parameter/wave_scale = 0.095
-shader_parameter/pixelation_level = 128
+shader_parameter/scale1 = Vector2(20, 20)
+shader_parameter/scale2 = Vector2(20, 20)
+shader_parameter/wave_strength = 10.0
+shader_parameter/wave_scale = 3.755
+shader_parameter/pixelation_level = 256
 
 [sub_resource type="QuadMesh" id="QuadMesh_1pyse"]
 material = SubResource("ShaderMaterial_yp3gy")
@@ -96,6 +92,9 @@ subdivide_depth = 400
 size = Vector3(0.5997009, 33.382324, 0.43881226)
 
 [sub_resource type="BoxMesh" id="BoxMesh_yp3gy"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8a8xh"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="World" type="Node3D" unique_id=1646113466]
 
@@ -147,7 +146,7 @@ mesh = SubResource("ArrayMesh_07nrn")
 shape = SubResource("ConvexPolygonShape3D_k5gkm")
 
 [node name="Player" parent="." unique_id=1101528458 instance=ExtResource("1_vqgh6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.987695, 19.010544, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.528343, 19.010544, -2.714983)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=399614966]
 environment = SubResource("Environment_1pyse")
@@ -163,12 +162,17 @@ mesh = SubResource("QuadMesh_1pyse")
 mesh_library = SubResource("MeshLibrary_h1e0x")
 physics_material = SubResource("PhysicsMaterial_tvcnf")
 
-[node name="StaticFishingRod" type="StaticBody3D" parent="." unique_id=1357402111]
+[node name="FishingSpot" parent="." unique_id=611738445 instance=ExtResource("4_vjnib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.804588, 0, 0)
+prompt_offset = Vector3(0, 0.05, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticFishingRod" unique_id=1690854089]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.002241, 0.5079231, 1.8008881)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FishingSpot" unique_id=1690854089]
 mesh = SubResource("BoxMesh_1pyse")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticFishingRod" unique_id=1431568594]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.926582, 15.047842, 1.7990582)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="FishingSpot" unique_id=1431568594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.889273, 0)
 mesh = SubResource("BoxMesh_yp3gy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FishingSpot" unique_id=256114388]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.889273, 0)
+shape = SubResource("ConcavePolygonShape3D_8a8xh")
