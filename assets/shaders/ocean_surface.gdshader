@@ -13,14 +13,25 @@ uniform float wave_strength = 1.0;
 uniform float wave_scale = 0.02;
 uniform int pixelation_level = 64;
 
+uniform vec2 hole_center = vec2(0.0);   // world XZ
+uniform float hole_radius = 0.0;        // 0 = no hole
+
+varying vec3 world_pos;
+
 void vertex() {
     vec2 global_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xz; 
     float noise_value = texture(noise_texture, global_position * wave_scale).r;
     float wave = sin(global_position.x * 0.2 + global_position.y * 0.2 + TIME + noise_value * 10.0) * wave_strength;
     VERTEX.y += wave;
+	
+	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 }
 
 void fragment() {
+	if (distance(world_pos.xz, hole_center) < hole_radius) {
+		discard;
+	}
+	
     vec2 scaledUV1 = UV * scale1;
     vec2 scaledUV2 = UV * scale2;
     vec2 scrolledUV1 = scaledUV1 + scroll_speed1 * TIME;

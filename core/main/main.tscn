@@ -23,6 +23,7 @@ grow_vertical = 2
 script = ExtResource("1_6vymn")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=129261547]
+size = Vector2i(1152, 648)
 
 [node name="World" parent="SubViewportContainer/SubViewport" unique_id=1646113466 instance=ExtResource("2_vwfi5")]
 

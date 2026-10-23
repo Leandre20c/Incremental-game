@@ -1,0 +1,22 @@
+[gd_resource type="Environment" format=3 uid="uid://bes52flf8tghd"]
+
+[ext_resource type="Material" uid="uid://0m3o41542ja6" path="res://data/weather/night_sky_material.tres" id="1_t1b81"]
+
+[sub_resource type="Sky" id="Sky_t1b81"]
+sky_material = ExtResource("1_t1b81")
+radiance_size = 0
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_t1b81")
+ambient_light_source = 2
+ambient_light_color = Color(0.2509804, 0.3019608, 0.4, 1)
+ambient_light_energy = 0.4
+reflected_light_source = 1
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.101960786, 0.12156863, 0.16078432, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_curve = 1.5
+fog_depth_end = 70.0

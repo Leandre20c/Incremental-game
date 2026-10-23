@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8f7xxdebprfd" path="res://features/player/player.gd" id="1_sjcu7"]
 [ext_resource type="Script" uid="uid://cfamedi7xdxeo" path="res://features/player/player_interaction.gd" id="2_fcb3x"]
+[ext_resource type="Script" uid="uid://d2kxx412ffs22" path="res://features/player/player_hand.gd" id="2_i250s"]
 [ext_resource type="PackedScene" uid="uid://drp6girpbyyuf" path="res://ui/world_prompt/WorldPrompt.tscn" id="3_emvbc"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1pyse"]
@@ -24,6 +25,12 @@ shape = SubResource("CapsuleShape3D_1pyse")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1415501150]
+far = 75.0
+
+[node name="Hand" type="Node3D" parent="CameraPivot/Camera3D" unique_id=1593470384]
+transform = Transform3D(-0.14455897, -0.50819343, -0.8490242, -0.08529987, 0.861243, -0.5009835, 0.9858127, 0, -0.16784924, -0.267, -0.167, -0.277)
+script = ExtResource("2_i250s")
+stack_offset = Vector3(-0.267, -0.167, -0.277)
 
 [node name="InteractionRayCast" type="RayCast3D" parent="CameraPivot/Camera3D" unique_id=557388802]
 target_position = Vector3(0, 0, -4)

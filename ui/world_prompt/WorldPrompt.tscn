@@ -1,15 +1,67 @@
 [gd_scene format=3 uid="uid://drp6girpbyyuf"]
 
 [ext_resource type="Script" uid="uid://o8d04utnhr6a" path="res://ui/world_prompt/world_prompt.gd" id="1_oejbh"]
+[ext_resource type="FontFile" uid="uid://cvpi0m8otwxqq" path="res://assets/fonts/MGS1 Codec.ttf" id="2_w4oyy"]
 
-[node name="WorldPrompt" type="Node3D" unique_id=1764673981]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ub5rx"]
+bg_color = Color(0.060530342, 0.06053035, 0.060530327, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1pyse"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yp3gy"]
+bg_color = Color(0.72622836, 0.42815644, 0, 1)
+
+[node name="WorldPrompt" type="CanvasLayer" unique_id=2111124098]
 script = ExtResource("1_oejbh")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=382005494]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ub5rx")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1348760902]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=2115131147]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="PromptLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=673417518]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_w4oyy")
+text = "[e] interact"
+horizontal_alignment = 1
+
+[node name="HoldLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=474333043]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_w4oyy")
+text = "Hold 3.0 s"
+horizontal_alignment = 1
+
+[node name="Container" type="Container" parent="Panel/MarginContainer/VBoxContainer" unique_id=1822176595]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="HoldProgress" type="ProgressBar" parent="Panel/MarginContainer/VBoxContainer" unique_id=1897470395]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_1pyse")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yp3gy")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=204431109]
 disable_3d = true
 transparent_bg = true
 gui_disable_input = true
-size = Vector2i(192, 96)
+size = Vector2i(512, 256)
 
 [node name="CenterContainer" type="CenterContainer" parent="SubViewport" unique_id=1471628486]
 anchors_preset = 15
@@ -20,23 +72,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/CenterContainer" unique_id=2115131147]
-layout_mode = 2
-
-[node name="PromptLabel" type="Label" parent="SubViewport/CenterContainer/VBoxContainer" unique_id=673417518]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Hey"
-
-[node name="HoldLabel" type="Label" parent="SubViewport/CenterContainer/VBoxContainer" unique_id=474333043]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Hold"
-
-[node name="HoldProgress" type="ProgressBar" parent="SubViewport/CenterContainer/VBoxContainer" unique_id=1897470395]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1856418568]
 pixel_size = 0.005

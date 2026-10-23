@@ -1,5 +1,5 @@
-class_name HarvestableBody
-extends InteractableBody
+class_name Harvestable
+extends Interactable
 
 @export var item_id: StringName = &"perch_fish"
 @export var amount: int = 1

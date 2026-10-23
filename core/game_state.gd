@@ -7,6 +7,9 @@ var _resources: Dictionary[StringName, int] = {}
 var _world_items: Dictionary[int, Dictionary] = {}
 var _next_entity_id: int = 1
 
+var _hands: Dictionary[int, Dictionary] = {} # player_id -> {"item_id", "count"}
+var _hand_capacity: int = 1
+
 #region Resources
 
 func get_amount(resource_id: StringName) -> int:
@@ -93,3 +96,45 @@ func from_dict(data: Dictionary) -> void:
 	_next_entity_id = int(data.get("next_entity_id", 1))
 
 #endregion 
+
+#region Hands
+
+func get_hand(player_id: int) -> Dictionary:
+	return _hands.get(player_id, {"item_id": &"", "count": 0})
+
+func get_hand_capacity() -> int:
+	return _hand_capacity
+
+func set_hand_capacity(capacity: int) -> void:
+	_hand_capacity = maxi(1, capacity)
+	EventBus.hand_capacity_changed.emit(_hand_capacity)
+
+func can_hold(player_id: int, item_id: StringName) -> bool:
+	var hand: Dictionary = get_hand(player_id)
+	if hand["count"] == 0:
+		return true
+	return hand["item_id"] == item_id and hand["count"] < _hand_capacity
+
+func add_to_hand(player_id: int, item_id: StringName) -> bool:
+	if not can_hold(player_id, item_id):
+		return false
+	var count: int = get_hand(player_id)["count"] + 1
+	_hands[player_id] = {"item_id": item_id, "count": count}
+	EventBus.hand_changed.emit(player_id, item_id, count)
+	return true
+
+## Returns the removed item id, or &"" if the hand was empty.
+func remove_from_hand(player_id: int) -> StringName:
+	var hand: Dictionary = get_hand(player_id)
+	if hand["count"] <= 0:
+		return &""
+	var item_id: StringName = hand["item_id"]
+	var count: int = hand["count"] - 1
+	if count == 0:
+		_hands.erase(player_id)
+	else:
+		_hands[player_id] = {"item_id": item_id, "count": count}
+	EventBus.hand_changed.emit(player_id, item_id, count)
+	return item_id
+
+#endregion

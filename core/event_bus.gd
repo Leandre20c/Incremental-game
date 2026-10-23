@@ -6,3 +6,10 @@ signal resource_changed(resource_id: StringName, new_amount: int)
 signal harvested(player_id: int, item_id: StringName, amount: int)
 signal world_item_spawned(entity_id: int, item_id: StringName, position: Vector3)
 signal world_item_removed(entity_id: int)
+
+signal player_respawned(player_id: int, position: Vector3)
+signal player_message(player_id: int, text: String)
+
+# Upgrades
+signal hand_changed(player_id: int, item_id: StringName, count: int)
+signal hand_capacity_changed(capacity: int)

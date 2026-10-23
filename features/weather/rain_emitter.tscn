@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://n10eiuuo0frj"]
+
+[ext_resource type="Script" uid="uid://botfts7aeorq3" path="res://features/weather/rain_emitter.gd" id="1_1ifub"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1pyse"]
+
+[node name="RainEmitter" type="GPUParticles3D" unique_id=1931727931]
+preprocess = 1.78
+process_material = SubResource("ParticleProcessMaterial_1pyse")
+script = ExtResource("1_1ifub")

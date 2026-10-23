@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://0m3o41542ja6"]
+
+[ext_resource type="Shader" uid="uid://cicqjt1pnvvi5" path="res://assets/shaders/night_sky.gdshader" id="1_sky"]
+
+[resource]
+shader = ExtResource("1_sky")
+shader_parameter/sky_top_color = Color(0.015, 0.02, 0.045, 1)
+shader_parameter/fog_color = Color(0.101960786, 0.12156863, 0.16078432, 1)
+shader_parameter/horizon_fog_start = -0.05
+shader_parameter/horizon_fog_end = 0.35
+shader_parameter/star_density = 60.0
+shader_parameter/star_threshold = 0.90000004275
+shader_parameter/star_size = 0.10000000405148
+shader_parameter/star_min_pixels = 0.5
+shader_parameter/star_brightness = 1.2
+shader_parameter/twinkle_speed = 2.0
+shader_parameter/moon_color = Color(0.76954484, 0.8120036, 0.9999985, 1)
+shader_parameter/moon_size = 0.05
+shader_parameter/halo_color = Color(0.35, 0.42, 0.55, 1)
+shader_parameter/halo_strength = 0.5
+shader_parameter/halo_falloff = 36.925

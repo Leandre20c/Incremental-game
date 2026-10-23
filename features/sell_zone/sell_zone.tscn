@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bwukwcmdf6aoo"]
+
+[ext_resource type="Script" uid="uid://8vvxs14mck2r" path="res://features/sell_zone/sell_zone.gd" id="1_8er18"]
+
+[node name="SellZone" type="Area3D" unique_id=1915778265]
+script = ExtResource("1_8er18")

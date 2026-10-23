@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://nb7fxint8yhu"]
+
+[ext_resource type="Script" uid="uid://c5xw2wg1p3jex" path="res://features/respawn_zone/respawn_zone.gd" id="1_oigwa"]
+
+[node name="RespawnZone" type="Area3D" unique_id=1915199032]
+script = ExtResource("1_oigwa")

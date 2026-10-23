@@ -1,6 +1,7 @@
 class_name PlayerController
 extends CharacterBody3D
 
+@export var player_id: int = 1 # Overridden by host/session in multiplayer later
 @export var move_speed: float = 5.0
 @export var sprint_speed: float = 8.0
 @export var jump_velocity: float = 4.5
@@ -12,6 +13,7 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	EventBus.player_respawned.connect(_on_player_respawned)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -38,3 +40,10 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0.0, current_speed)
 
 	move_and_slide()
+
+func _on_player_respawned(target_player_id: int, target_position: Vector3) -> void:
+	if target_player_id != player_id:
+		return
+	global_position = target_position
+	velocity = Vector3.ZERO
+	reset_physics_interpolation()

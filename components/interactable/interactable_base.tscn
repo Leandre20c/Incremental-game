@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dbpx5f1pfymh2"]
 
-[ext_resource type="Script" uid="uid://d0gwdh5jgypxi" path="res://components/interactable/harvestable_body.gd" id="1_t3q57"]
+[ext_resource type="Script" uid="uid://d0gwdh5jgypxi" path="res://components/interactable/harvestable.gd" id="1_t3q57"]
 
 [node name="InterractableBase" type="StaticBody3D" unique_id=611738445]
+
+[node name="Harvestable" type="Node3D" parent="." unique_id=1929316588]
 script = ExtResource("1_t3q57")
