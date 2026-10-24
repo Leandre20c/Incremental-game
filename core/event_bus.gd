@@ -7,8 +7,13 @@ signal harvested(player_id: int, item_id: StringName, amount: int)
 signal world_item_spawned(entity_id: int, item_id: StringName, position: Vector3)
 signal world_item_removed(entity_id: int)
 
+# Local UI requests (not simulation events)
+signal menu_requested(player_id: int, menu_id: StringName)
+
 signal player_respawned(player_id: int, position: Vector3)
 signal player_message(player_id: int, text: String)
+
+signal item_sold(player_id: int, item_id: StringName, value: int)
 
 # Upgrades
 signal hand_changed(player_id: int, item_id: StringName, count: int)

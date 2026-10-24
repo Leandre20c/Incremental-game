@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dpf220767gf0n" path="res://sub_viewport_container.gd" id="1_6vymn"]
 [ext_resource type="Shader" uid="uid://nvji32yp285v" path="res://assets/shaders/psx_post.gdshader" id="1_vwfi5"]
 [ext_resource type="PackedScene" uid="uid://ccrqnpbosvrqa" path="res://features/world/world.tscn" id="2_vwfi5"]
+[ext_resource type="PackedScene" uid="uid://cil1b70a3cr05" path="res://ui/computer_menu/computer_menu.tscn" id="4_yibi5"]
+[ext_resource type="PackedScene" uid="uid://ceat1lfpxjtrs" path="res://ui/resource_counter/resource_counter.tscn" id="5_k5wvu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_emvbc"]
 shader = ExtResource("1_vwfi5")
@@ -23,8 +25,30 @@ grow_vertical = 2
 script = ExtResource("1_6vymn")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=129261547]
+handle_input_locally = false
 size = Vector2i(1152, 648)
+render_target_update_mode = 4
 
 [node name="World" parent="SubViewportContainer/SubViewport" unique_id=1646113466 instance=ExtResource("2_vwfi5")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2118223018]
+
+[node name="ComputerMenu" parent="UI" unique_id=1018229546 instance=ExtResource("4_yibi5")]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=24164412]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ResourceCounter" parent="UI/MarginContainer" unique_id=2029592214 instance=ExtResource("5_k5wvu")]
+physics_interpolation_mode = 0
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0

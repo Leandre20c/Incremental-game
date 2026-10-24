@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ceat1lfpxjtrs"]
+
+[ext_resource type="FontFile" uid="uid://cvpi0m8otwxqq" path="res://assets/fonts/MGS1 Codec.ttf" id="1_t8s30"]
+[ext_resource type="Script" uid="uid://b6efufyopx48u" path="res://ui/resource_counter/resource_counter.gd" id="2_sfvcg"]
+
+[node name="ResourceCounter" type="Label" unique_id=2029592214]
+theme_override_fonts/font = ExtResource("1_t8s30")
+theme_override_font_sizes/font_size = 24
+script = ExtResource("2_sfvcg")

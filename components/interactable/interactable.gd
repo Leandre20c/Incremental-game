@@ -60,6 +60,13 @@ func unfocus(player_id: int) -> void:
 func create_command(_player_id: int) -> Command:
 	return null
 
+## Called by PlayerInteraction. Default: send the command to the simulation.
+## Override for purely local actions (UI) that never touch the game state.
+func interact(player_id: int) -> void:
+	var cmd: Command = create_command(player_id)
+	if cmd:
+		CommandService.dispatch(cmd)
+
 func get_prompt_position() -> Vector3:
 	return _body.global_position + prompt_offset
 

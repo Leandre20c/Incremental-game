@@ -51,11 +51,13 @@ func _update_focus() -> void:
 	if _current:
 		_current.focus(player_id)
 	focus_changed.emit(_current)
+	
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		_reset_hold()
+		return
 
 func _trigger() -> void:
-	var cmd: Command = _current.create_command(player_id)
-	if cmd:
-		CommandService.dispatch(cmd)
+	_current.interact(player_id)
 
 func _reset_hold() -> void:
 	if _hold_time > 0.0:

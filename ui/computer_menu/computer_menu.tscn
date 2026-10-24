@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cil1b70a3cr05"]
+
+[ext_resource type="Script" uid="uid://d4bjh5cclbs74" path="res://ui/computer_menu/computer_menu.gd" id="1_qjt67"]
+
+[node name="ComputerMenu" type="CanvasLayer" unique_id=1018229546]
+script = ExtResource("1_qjt67")
+
+[node name="Root" type="Control" parent="." unique_id=1835252678]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Root" unique_id=2109518597]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Root/MarginContainer" unique_id=2052585648]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer" unique_id=1937705038]
+layout_mode = 2
+text = "Nothing yet :)"

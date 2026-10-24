@@ -10,6 +10,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1pyse"]
 
 [node name="Player" type="CharacterBody3D" unique_id=1101528458]
+collision_mask = 3
 script = ExtResource("1_sjcu7")
 sprint_speed = 19.44
 
@@ -34,6 +35,7 @@ stack_offset = Vector3(-0.267, -0.167, -0.277)
 
 [node name="InteractionRayCast" type="RayCast3D" parent="CameraPivot/Camera3D" unique_id=557388802]
 target_position = Vector3(0, 0, -4)
+collision_mask = 6
 script = ExtResource("2_fcb3x")
 
 [node name="InteractionHandler" type="Node3D" parent="." unique_id=1293990205]
