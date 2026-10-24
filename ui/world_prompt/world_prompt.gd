@@ -53,10 +53,10 @@ func _on_focus_changed(target: Interactable) -> void:
 
 	_prompt_label.text = "[%s] %s" % [_get_input_label(), _target.prompt_text]
 
-	var is_hold: bool = _target.hold_duration > 0.0
+	var hold_duration: float = _target.get_hold_duration()
+	var is_hold: bool = hold_duration > 0.0
 	_hold_label.visible = is_hold
-	_hold_label.text = "Hold %.1f s" % _target.hold_duration
-	_progress.visible = is_hold
+	_hold_label.text = "Hold %.1f s" % hold_duration
 	_set_progress(0.0)
 
 	_panel.reset_size() # Shrink to the new content

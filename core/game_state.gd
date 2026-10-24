@@ -10,6 +10,27 @@ var _next_entity_id: int = 1
 var _hands: Dictionary[int, Dictionary] = {} # player_id -> {"item_id", "count"}
 var _hand_capacity: int = 1
 
+var _upgrade_levels: Dictionary[StringName, int] = {}
+
+func _ready() -> void:
+	CommandService.dispatch(BuyUpgradeCommand.new(1, &"faster_fishing"))
+	CommandService.process_queue()
+	print("No money: ", GameState.get_upgrade_level(&"faster_fishing")) # 0
+
+	GameState.add_resource(&"money", 100)
+	CommandService.dispatch(BuyUpgradeCommand.new(1, &"faster_fishing"))
+	CommandService.dispatch(BuyUpgradeCommand.new(1, &"faster_fishing"))
+	CommandService.process_queue()
+	print("Level: ", GameState.get_upgrade_level(&"faster_fishing")) # 2
+	print("Money: ", GameState.get_amount(&"money")) # 75 (100 - 10 - 15)
+	
+	var definition: UpgradeDefinition = UpgradeDatabase.get_definition(&"faster_fishing")
+	print("Effects: ", definition.effects.size())
+	for effect in definition.effects:
+		print("  '", effect.stat_id, "' op=", effect.operation, " value=", effect.value_per_level)
+	
+	print("Fishing speed: ", Stats.apply(StatIds.FISHING_SPEED, 1.0)) # 1.5 (level 2)
+	
 #region Resources
 
 func get_amount(resource_id: StringName) -> int:
@@ -65,11 +86,16 @@ func to_dict() -> Dictionary:
 			"item_id": String(item["item_id"]),
 			"position": [p.x, p.y, p.z],
 		}
-
+	
+	var upgrades: Dictionary = {}
+	for upgrade_id in _upgrade_levels:
+		upgrades[String(upgrade_id)] = _upgrade_levels[upgrade_id]
+		
 	return {
 		"resources": resources,
 		"world_items": world_items,
 		"next_entity_id": _next_entity_id,
+		"upgrades": upgrades,
 	}
 
 func from_dict(data: Dictionary) -> void:
@@ -94,6 +120,14 @@ func from_dict(data: Dictionary) -> void:
 		EventBus.world_item_spawned.emit(entity_id, item_id, position)
 
 	_next_entity_id = int(data.get("next_entity_id", 1))
+	
+	# Reset levels missing from the save, then apply the saved ones
+	var upgrades: Dictionary = data.get("upgrades", {})
+	for upgrade_id in _upgrade_levels.keys():
+		if not upgrades.has(String(upgrade_id)):
+			set_upgrade_level(upgrade_id, 0)
+	for key in upgrades:
+		set_upgrade_level(StringName(key), int(upgrades[key]))
 
 #endregion 
 
@@ -136,5 +170,22 @@ func remove_from_hand(player_id: int) -> StringName:
 		_hands[player_id] = {"item_id": item_id, "count": count}
 	EventBus.hand_changed.emit(player_id, item_id, count)
 	return item_id
+
+#endregion
+
+#region Upgrades
+
+func get_upgrade_level(upgrade_id: StringName) -> int:
+	return _upgrade_levels.get(upgrade_id, 0)
+
+func set_upgrade_level(upgrade_id: StringName, level: int) -> void:
+	level = maxi(0, level)
+	if get_upgrade_level(upgrade_id) == level:
+		return
+	if level == 0:
+		_upgrade_levels.erase(upgrade_id)
+	else:
+		_upgrade_levels[upgrade_id] = level
+	EventBus.upgrade_level_changed.emit(upgrade_id, level)
 
 #endregion

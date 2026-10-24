@@ -21,15 +21,16 @@ func _physics_process(delta: float) -> void:
 		_reset_hold()
 		return
 
-	if _current.hold_duration <= 0.0:
+	var hold_duration: float = _current.get_hold_duration()
+	if hold_duration <= 0.0:
 		if Input.is_action_just_pressed("interact_primary"):
 			_trigger()
 		return
 
 	if Input.is_action_pressed("interact_primary"):
 		_hold_time += delta
-		hold_progress_changed.emit(minf(_hold_time / _current.hold_duration, 1.0))
-		if _hold_time >= _current.hold_duration:
+		hold_progress_changed.emit(minf(_hold_time / hold_duration, 1.0))
+		if _hold_time >= hold_duration:
 			_trigger()
 			_hold_time = 0.0 # Keep holding = keep harvesting
 	else:

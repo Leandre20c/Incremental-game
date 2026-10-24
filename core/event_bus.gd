@@ -15,6 +15,11 @@ signal player_message(player_id: int, text: String)
 
 signal item_sold(player_id: int, item_id: StringName, value: int)
 
-# Upgrades
+# 
+# Upgrades - might be useless
 signal hand_changed(player_id: int, item_id: StringName, count: int)
 signal hand_capacity_changed(capacity: int)
+
+# Upgrades
+signal upgrade_level_changed(upgrade_id: StringName, level: int)
+signal upgrade_purchased(player_id: int, upgrade_id: StringName, level: int)

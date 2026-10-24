@@ -75,3 +75,7 @@ func _set_outline(visible_outline: bool) -> void:
 	for mesh in _meshes:
 		if is_instance_valid(mesh):
 			mesh.material_overlay = material
+
+## Effective hold time. Override to apply upgrades. Read this instead of hold_duration.
+func get_hold_duration() -> float:
+	return hold_duration

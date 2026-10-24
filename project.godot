@@ -18,7 +18,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 EventBus="*uid://weqjebv1eqw6"
+Stats="*uid://72553fog2ct5"
 ItemDatabase="*uid://jwieibblq8cc"
+UpgradeDatabase="*uid://3a4jngoadel1"
 GameState="*uid://bt7xlel87oq5a"
 CommandService="*uid://c252ceynpvx27"
 
