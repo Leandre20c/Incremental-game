@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://bmcsync2ms2ma"]
+
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_yaq6r"]
+
+[resource]
+script = ExtResource("1_yaq6r")
+id = &"player_speed"
+display_name = "Player speed"
+base_value = 5.0
+metadata/_custom_type_script = "uid://djllv0njt17nk"

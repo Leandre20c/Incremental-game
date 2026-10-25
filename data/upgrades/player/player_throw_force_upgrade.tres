@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://b20u2ugf8aw0c"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_g3utw"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="2_lc3bt"]
+
+[resource]
+script = ExtResource("2_lc3bt")
+id = &"player_throw_force_upgrade"
+display_name = "Throw force"
+description = "Increases throw force"
+metadata/_custom_type_script = "uid://87c8872je4ed"

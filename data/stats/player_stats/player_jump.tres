@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://ddglaw7f5i7mp"]
+
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_j0i13"]
+
+[resource]
+script = ExtResource("1_j0i13")
+id = &"player_jump"
+display_name = "Player jump force"
+base_value = 40.0
+metadata/_custom_type_script = "uid://djllv0njt17nk"

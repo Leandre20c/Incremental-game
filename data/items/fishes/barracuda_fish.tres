@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b4ddig2cvwfsr"]
+
+[ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_vi0er"]
+[ext_resource type="Resource" uid="uid://clisovfr8f01h" path="res://data/stats/barracuda/barracuda_price.tres" id="2_hbk6x"]
+[ext_resource type="PackedScene" uid="uid://x1xa06oady4h" path="res://features/items/barracuda_fish.tscn" id="2_vi0er"]
+
+[resource]
+script = ExtResource("1_vi0er")
+id = &"barracuda_fish"
+display_name = "Barracuda"
+world_scene = ExtResource("2_vi0er")
+sellable = true
+sell_value_stat = ExtResource("2_hbk6x")
+metadata/_custom_type_script = "uid://6mjbdc34rao3"

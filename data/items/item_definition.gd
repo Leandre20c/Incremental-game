@@ -9,12 +9,12 @@ extends Resource
 	set(value):
 		sellable = value
 		notify_property_list_changed() # Refresh the inspector
-@export var sell_value: int = 1
+@export var sell_value_stat: StatDefinition
 @export var grants_tool: StringName = &"" ## If set, collecting this item gives the player this tool
 
 func _validate_property(property: Dictionary) -> void:
-	if property.name == "sell_value" and not sellable:
+	if property.name == "sell_value_stat" and not sellable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 
 func can_be_sold() -> bool:
-	return sellable and sell_value > 0
+	return sellable and sell_value_stat != null and sell_value_stat.base_value > 0

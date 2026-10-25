@@ -1,12 +1,14 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dtyd0uvmmoowb"]
 
 [ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_omm37"]
-[ext_resource type="PackedScene" uid="uid://cddi7gxhjkhf5" path="res://features/items/fish.tscn" id="2_l6joo"]
+[ext_resource type="Resource" uid="uid://c02ro8aw8oj8g" path="res://data/stats/perch/perch_price.tres" id="2_tapep"]
+[ext_resource type="PackedScene" uid="uid://cddi7gxhjkhf5" path="res://features/items/perch_fish.tscn" id="3_mm6q7"]
 
 [resource]
 script = ExtResource("1_omm37")
 id = &"perch_fish"
 display_name = "Perch"
-world_scene = ExtResource("2_l6joo")
+world_scene = ExtResource("3_mm6q7")
 sellable = true
+sell_value_stat = ExtResource("2_tapep")
 metadata/_custom_type_script = "uid://6mjbdc34rao3"

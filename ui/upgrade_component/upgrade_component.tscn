@@ -4,22 +4,28 @@
 [ext_resource type="FontFile" uid="uid://dc2a4asqn6510" path="res://assets/fonts/MGS1 HUD.ttf" id="1_oliw6"]
 
 [node name="UpgradeComponent" type="HBoxContainer" unique_id=71034173]
-offset_right = 265.0
-offset_bottom = 31.0
-theme_override_constants/separation = 16
+offset_right = 560.0
+offset_bottom = 22.0
+size_flags_horizontal = 3
+theme_override_constants/separation = 32
 script = ExtResource("1_honqj")
-metadata/_edit_use_anchors_ = true
 
 [node name="TitleLabel" type="Label" parent="." unique_id=2079525942]
+custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_oliw6")
 theme_override_font_sizes/font_size = 32
-text = "Fishing speed"
+text = "Title label"
 
 [node name="PreviewLabel" type="Label" parent="." unique_id=701483262]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_oliw6")
+theme_override_font_sizes/font_size = 32
+text = "3.0 -> 4.0"
 
 [node name="LevelLabel" type="Label" parent="." unique_id=308279684]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_oliw6")
 theme_override_font_sizes/font_size = 32
@@ -31,3 +37,4 @@ size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("1_oliw6")
 theme_override_font_sizes/font_size = 32
 text = "upgrade"
+flat = true

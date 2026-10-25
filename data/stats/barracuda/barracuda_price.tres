@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://clisovfr8f01h"]
+
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_l8pnl"]
+
+[resource]
+script = ExtResource("1_l8pnl")
+id = &"barracuda_price"
+display_name = "barracuda's value"
+base_value = 1000.0
+metadata/_custom_type_script = "uid://djllv0njt17nk"

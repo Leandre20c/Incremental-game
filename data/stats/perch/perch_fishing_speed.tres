@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://cotjqh4ye4apr"]
 
-[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_p4su2"]
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_fgjvp"]
 
 [resource]
-script = ExtResource("1_p4su2")
-id = &"fishing_spot_speed"
+script = ExtResource("1_fgjvp")
+id = &"perch_fishing_speed"
 display_name = "Fishing speed"
 base_value = 3.0
 display_format = "%.1fs"

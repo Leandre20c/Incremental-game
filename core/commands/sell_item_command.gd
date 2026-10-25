@@ -19,11 +19,14 @@ func execute() -> bool:
 	var definition: ItemDefinition = ItemDatabase.get_definition(item_id)
 	if definition == null or not definition.can_be_sold():
 		return false
+	var value: int = maxi(1, roundi(Stats.get_value(definition.sell_value_stat)))
 	GameState.remove_world_item(entity_id)
-	GameState.add_resource(currency_id, definition.sell_value)
-	EventBus.item_sold.emit(player_id, item_id, definition.sell_value)
+	GameState.add_resource(currency_id, value)
+	EventBus.item_sold.emit(player_id, item_id, value)
 	return true
-
+	
+	
+## Serialize 
 func to_dict() -> Dictionary:
 	var data: Dictionary = super.to_dict()
 	data["type"] = "SellItemCommand"

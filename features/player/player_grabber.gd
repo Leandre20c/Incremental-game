@@ -45,7 +45,6 @@ var _hold_velocity_history: Array[Vector3] = []
 var _throw_on_release: bool = false
 var _throw_velocity: Vector3 = Vector3.ZERO
 
-var _rotation_offset: Basis = Basis.IDENTITY
 var _rotating: bool = false
 var _last_yaw_basis: Basis = Basis.IDENTITY
 

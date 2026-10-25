@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://c02ro8aw8oj8g"]
+
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_h40sc"]
+
+[resource]
+script = ExtResource("1_h40sc")
+id = &"perch_money_value"
+display_name = "Perch's value"
+base_value = 10.0
+metadata/_custom_type_script = "uid://djllv0njt17nk"

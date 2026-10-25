@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://b4e4ce8i3yjr2"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_y8v16"]
+[ext_resource type="Resource" uid="uid://cotjqh4ye4apr" path="res://data/stats/perch/perch_fishing_speed.tres" id="2_eau0l"]
+[ext_resource type="Resource" uid="uid://26rkhm663fxk" path="res://data/stats/barracuda/barracuda_fishing_speed.tres" id="3_eja7k"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="3_rgd6t"]
+
+[sub_resource type="Resource" id="Resource_0j8cg"]
+script = ExtResource("1_y8v16")
+stat = ExtResource("2_eau0l")
+operation = 1
+value_per_level = 0.8
+metadata/_custom_type_script = "uid://camjjo7x1u5qc"
+
+[resource]
+script = ExtResource("3_rgd6t")
+id = &"barracuda_fishing"
+display_name = "Faster Fishing"
+description = "Decrease the spot fishing speed"
+max_level = 10
+preview_stat = ExtResource("3_eja7k")
+effects = Array[ExtResource("1_y8v16")]([SubResource("Resource_0j8cg")])
+metadata/_custom_type_script = "uid://87c8872je4ed"

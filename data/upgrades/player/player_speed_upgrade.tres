@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://bj7bmo32k83es"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_y6ggy"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="2_00t27"]
+
+[resource]
+script = ExtResource("2_00t27")
+id = &"player_speed_upgrade"
+display_name = "velocity"
+description = "player_speed_upgrade"
+metadata/_custom_type_script = "uid://87c8872je4ed"

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://barr82xtcf4dg"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_xeb20"]
+[ext_resource type="Resource" uid="uid://c02ro8aw8oj8g" path="res://data/stats/perch/perch_price.tres" id="2_lrsq6"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="3_8nhvn"]
+
+[sub_resource type="Resource" id="Resource_0j8cg"]
+script = ExtResource("1_xeb20")
+stat = ExtResource("2_lrsq6")
+operation = 1
+value_per_level = 1.5
+metadata/_custom_type_script = "uid://camjjo7x1u5qc"
+
+[resource]
+script = ExtResource("3_8nhvn")
+id = &"perch_money_value"
+display_name = "Increase value"
+description = "Increase the perch's value"
+base_cost = 20
+cost_growth = 1.6
+max_level = 5
+preview_stat = ExtResource("2_lrsq6")
+effects = Array[ExtResource("1_xeb20")]([SubResource("Resource_0j8cg")])
+metadata/_custom_type_script = "uid://87c8872je4ed"

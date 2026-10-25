@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://xfjpp3jcwaxj"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_qoy6t"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="2_uwn1a"]
+
+[resource]
+script = ExtResource("2_uwn1a")
+id = &"player_jump_upgrade"
+display_name = "Jump height"
+description = "player_jump_upgrade"
+metadata/_custom_type_script = "uid://87c8872je4ed"

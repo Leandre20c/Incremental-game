@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cil1b70a3cr05" path="res://ui/computer_menu/computer_menu.tscn" id="4_yibi5"]
 [ext_resource type="PackedScene" uid="uid://ceat1lfpxjtrs" path="res://ui/resource_counter/resource_counter.tscn" id="5_k5wvu"]
 [ext_resource type="Script" uid="uid://dmnegcr3b21kq" path="res://ui/crosshair/crosshair.gd" id="6_81xgm"]
+[ext_resource type="Script" uid="uid://b2jg63sqbiddv" path="res://ui/tool_hint/tool_hint.gd" id="6_vxc0a"]
 [ext_resource type="FontFile" uid="uid://dc2a4asqn6510" path="res://assets/fonts/MGS1 HUD.ttf" id="7_5alkf"]
 [ext_resource type="Script" uid="uid://bdl53spcqosr6" path="res://ui/grab_hint/grab_hint.gd" id="8_vxc0a"]
 
@@ -49,6 +50,33 @@ theme_override_constants/margin_left = 6
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer" unique_id=1721184102]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 16
+script = ExtResource("6_vxc0a")
+
+[node name="ToolDisplayName" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1449472067]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_5alkf")
+theme_override_font_sizes/font_size = 48
+text = "Lighter"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ToolHint" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1770233081]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_5alkf")
+theme_override_font_sizes/font_size = 32
+text = "— [L] to light —
+"
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="GrabHint" type="Label" parent="UI/MarginContainer" unique_id=340267980]
 layout_mode = 2

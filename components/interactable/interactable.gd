@@ -5,6 +5,10 @@ extends Node3D
 
 signal focused(player_id: int)
 signal unfocused(player_id: int)
+signal hold_started(player_id: int)
+signal hold_progressed(player_id: int, ratio: float)
+signal hold_ended(player_id: int)
+signal triggered(player_id: int)
 
 const META_KEY: StringName = &"interactable"
 const OUTLINE_SHADER: Shader = preload("res://components/outline/outline.gdshader")
@@ -80,3 +84,16 @@ func _set_outline(visible_outline: bool) -> void:
 ## Effective hold time. Override to apply upgrades. Read this instead of hold_duration.
 func get_hold_duration() -> float:
 	return hold_duration
+
+## Presentation hooks, called by PlayerInteraction. Never mutate game state from these.
+func begin_hold(player_id: int) -> void:
+	hold_started.emit(player_id)
+
+func update_hold(player_id: int, ratio: float) -> void:
+	hold_progressed.emit(player_id, ratio)
+
+func end_hold(player_id: int) -> void:
+	hold_ended.emit(player_id)
+
+func notify_triggered(player_id: int) -> void:
+	triggered.emit(player_id)

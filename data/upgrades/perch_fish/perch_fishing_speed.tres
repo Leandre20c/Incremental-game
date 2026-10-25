@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="1_5lror"]
 [ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_yt7m8"]
-[ext_resource type="Resource" uid="uid://cotjqh4ye4apr" path="res://data/stats/fishing_spot_speed.tres" id="2_i0lhv"]
+[ext_resource type="Resource" uid="uid://cotjqh4ye4apr" path="res://data/stats/perch/perch_fishing_speed.tres" id="2_i0lhv"]
 
 [sub_resource type="Resource" id="Resource_0j8cg"]
 script = ExtResource("1_yt7m8")
