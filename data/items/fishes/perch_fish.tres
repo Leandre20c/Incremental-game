@@ -8,4 +8,5 @@ script = ExtResource("1_omm37")
 id = &"perch_fish"
 display_name = "Perch"
 world_scene = ExtResource("2_l6joo")
+sellable = true
 metadata/_custom_type_script = "uid://6mjbdc34rao3"

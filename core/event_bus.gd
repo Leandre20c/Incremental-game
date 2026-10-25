@@ -9,17 +9,19 @@ signal world_item_removed(entity_id: int)
 
 # Local UI requests (not simulation events)
 signal menu_requested(player_id: int, menu_id: StringName)
+signal menu_closed(player_id: int, menu_id: StringName)
 
 signal player_respawned(player_id: int, position: Vector3)
 signal player_message(player_id: int, text: String)
 
-signal item_sold(player_id: int, item_id: StringName, value: int)
+# items
+signal item_grabbed(player_id: int, entity_id: int)
+signal items_released(player_id: int, entity_ids: Array)
+signal tool_granted(player_id: int, tool_id: StringName)
+signal tool_toggled(player_id: int, tool_id: StringName, active: bool)
 
-# 
-# Upgrades - might be useless
-signal hand_changed(player_id: int, item_id: StringName, count: int)
-signal hand_capacity_changed(capacity: int)
-
-# Upgrades
+# Upgrades and money
 signal upgrade_level_changed(upgrade_id: StringName, level: int)
 signal upgrade_purchased(player_id: int, upgrade_id: StringName, level: int)
+
+signal item_sold(player_id: int, item_id: StringName, value: int)

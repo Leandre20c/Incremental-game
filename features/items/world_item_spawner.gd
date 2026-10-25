@@ -8,6 +8,7 @@ extends Node3D
 var _views: Dictionary[int, Node3D] = {}
 
 func _ready() -> void:
+	add_to_group(&"world_item_spawner")
 	EventBus.world_item_spawned.connect(_on_world_item_spawned)
 	EventBus.world_item_removed.connect(_on_world_item_removed)
 
@@ -37,3 +38,11 @@ func _on_world_item_removed(entity_id: int) -> void:
 	if view:
 		view.queue_free()
 	_views.erase(entity_id)
+
+func get_view(entity_id: int) -> Node3D:
+	return _views.get(entity_id)
+
+## Registers a node that already exists in the scene as the view of an entity.
+func adopt_view(entity_id: int, view: Node3D) -> void:
+	view.set_meta(&"entity_id", entity_id)
+	_views[entity_id] = view

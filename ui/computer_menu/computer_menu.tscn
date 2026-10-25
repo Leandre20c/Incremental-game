@@ -1,12 +1,17 @@
 [gd_scene format=3 uid="uid://cil1b70a3cr05"]
 
 [ext_resource type="Script" uid="uid://d4bjh5cclbs74" path="res://ui/computer_menu/computer_menu.gd" id="1_qjt67"]
+[ext_resource type="Script" uid="uid://c67j1yka82l13" path="res://ui/menu_tabs/menu_tabs.gd" id="2_00m6n"]
+[ext_resource type="FontFile" uid="uid://dc2a4asqn6510" path="res://assets/fonts/MGS1 HUD.ttf" id="2_qiyo2"]
+[ext_resource type="PackedScene" uid="uid://c3ijjjyuhhek3" path="res://ui/upgrade_component/upgrade_component.tscn" id="3_3tyn7"]
+[ext_resource type="Resource" uid="uid://c5ai401idpg7b" path="res://data/upgrades/fishing_spot/faster_fishing.tres" id="4_e8dpu"]
 
 [node name="ComputerMenu" type="CanvasLayer" unique_id=1018229546]
 script = ExtResource("1_qjt67")
 
 [node name="Root" type="Control" parent="." unique_id=1835252678]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,10 +28,120 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="CenterContainer" type="CenterContainer" parent="Root/MarginContainer" unique_id=2052585648]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer" unique_id=1937705038]
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer" unique_id=1685926217]
+custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
-text = "Nothing yet :)"
+
+[node name="AllTabs" type="HBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=250611544]
+layout_mode = 2
+
+[node name="MenuTabs" type="HBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs" unique_id=1078954243 node_paths=PackedStringArray("pages")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_00m6n")
+pages = [NodePath("../../PlayerUpgradesMenu"), NodePath("../../FishingSpotUpgradesMenu")]
+
+[node name="PlayerUpgradeButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs/MenuTabs" unique_id=1162449933]
+layout_mode = 2
+text = "Player"
+
+[node name="FishingSpotUpgradeButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs/MenuTabs" unique_id=1055793370]
+layout_mode = 2
+text = "Fishing spot"
+
+[node name="CloseButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs" unique_id=336475852]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "close"
+
+[node name="PlayerUpgradesMenu" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=510781393]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PlayerUpgradesMenu" unique_id=431338482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PlayerUpgradesMenu/MarginContainer" unique_id=220295591]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PlayerUpgradesMenu/MarginContainer/VBoxContainer" unique_id=875082218]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_qiyo2")
+theme_override_font_sizes/font_size = 48
+text = "Player upgrades"
+
+[node name="PanelContainer" type="Container" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PlayerUpgradesMenu/MarginContainer/VBoxContainer" unique_id=77840472]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PlayerUpgradesMenu/MarginContainer/VBoxContainer" unique_id=2132332597]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PlayerUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=2029195088]
+layout_mode = 2
+
+[node name="FishingSpotSpeedUpgrade" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PlayerUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer/Panel" unique_id=2079936727 instance=ExtResource("3_3tyn7")]
+layout_mode = 0
+upgrade = ExtResource("4_e8dpu")
+
+[node name="FishingSpotUpgradesMenu" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=1196940895]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/FishingSpotUpgradesMenu" unique_id=1728807547]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/FishingSpotUpgradesMenu/MarginContainer" unique_id=1742873934]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer/VBoxContainer/FishingSpotUpgradesMenu/MarginContainer/VBoxContainer" unique_id=1679128683]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_qiyo2")
+theme_override_font_sizes/font_size = 48
+text = "Fishing spot upgrades"
+
+[node name="PanelContainer" type="Container" parent="Root/MarginContainer/CenterContainer/VBoxContainer/FishingSpotUpgradesMenu/MarginContainer/VBoxContainer" unique_id=1187596181]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/FishingSpotUpgradesMenu/MarginContainer/VBoxContainer" unique_id=1675050190]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer/FishingSpotUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1927479928]
+layout_mode = 2
+
+[node name="FishingSpotSpeedUpgrade" parent="Root/MarginContainer/CenterContainer/VBoxContainer/FishingSpotUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer/Panel" unique_id=71034173 instance=ExtResource("3_3tyn7")]
+layout_mode = 0
+upgrade = ExtResource("4_e8dpu")

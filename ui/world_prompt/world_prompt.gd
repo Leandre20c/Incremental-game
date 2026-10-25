@@ -8,9 +8,11 @@ extends CanvasLayer
 @export var action_name: StringName = &"interact_primary"
 @export var screen_offset: Vector2 = Vector2(0.0, -8.0)
 
+@onready var _displayname_label: Label = %DisplaynameLabel
 @onready var _panel: PanelContainer = %Panel
 @onready var _prompt_label: Label = %PromptLabel
 @onready var _hold_label: Label = %HoldLabel
+@onready var _spacer: Container = %Spacer
 @onready var _progress: ProgressBar = %HoldProgress
 
 var _target: Interactable = null
@@ -29,6 +31,8 @@ func _ready() -> void:
 		return
 	interaction.focus_changed.connect(_on_focus_changed)
 	interaction.hold_progress_changed.connect(_on_hold_progress_changed)
+	EventBus.menu_requested.connect(_on_menu_requested)
+	EventBus.menu_closed.connect(_on_menu_closed)
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_target):
@@ -50,12 +54,14 @@ func _on_focus_changed(target: Interactable) -> void:
 	if _target == null:
 		_panel.hide()
 		return
-
+	
+	_displayname_label.text = "%s" % [target.display_name]
 	_prompt_label.text = "[%s] %s" % [_get_input_label(), _target.prompt_text]
 
 	var hold_duration: float = _target.get_hold_duration()
 	var is_hold: bool = hold_duration > 0.0
 	_hold_label.visible = is_hold
+	_spacer.visible = is_hold
 	_hold_label.text = "Hold %.1f s" % hold_duration
 	_set_progress(0.0)
 
@@ -85,8 +91,24 @@ func _get_input_label() -> String:
 	if events.is_empty():
 		return "?"
 	var event: InputEvent = events[0]
+
+	if event is InputEventKey:
+		var keycode: Key = event.keycode
+		if event.physical_keycode != KEY_NONE:
+			# Translate the physical position to the key on the player's layout (QWERTY, AZERTY…)
+			keycode = DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
+		return OS.get_keycode_string(keycode)
+
 	if event is InputEventMouseButton:
 		match event.button_index:
 			MOUSE_BUTTON_LEFT: return "LMB"
 			MOUSE_BUTTON_RIGHT: return "RMB"
+			MOUSE_BUTTON_MIDDLE: return "MMB"
+
 	return event.as_text()
+
+func _on_menu_requested(_player_id: int, _menu_id: StringName):
+	hide()
+
+func _on_menu_closed(_player_id: int, _menu_id: StringName):
+	show()

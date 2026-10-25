@@ -9,6 +9,7 @@ signal unfocused(player_id: int)
 const META_KEY: StringName = &"interactable"
 const OUTLINE_SHADER: Shader = preload("res://components/outline/outline.gdshader")
 
+@export var display_name: String = "Display name"
 @export var prompt_text: String = "Interact"
 @export var prompt_offset: Vector3 = Vector3(0.0, 0.5, 0.0)
 @export var enabled: bool = true:

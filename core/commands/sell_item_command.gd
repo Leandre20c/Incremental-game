@@ -17,7 +17,7 @@ func execute() -> bool:
 		return false # Already sold or picked up (zone can fire twice)
 	var item_id: StringName = item["item_id"]
 	var definition: ItemDefinition = ItemDatabase.get_definition(item_id)
-	if definition == null or definition.sell_value <= 0:
+	if definition == null or not definition.can_be_sold():
 		return false
 	GameState.remove_world_item(entity_id)
 	GameState.add_resource(currency_id, definition.sell_value)

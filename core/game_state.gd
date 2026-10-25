@@ -7,29 +7,19 @@ var _resources: Dictionary[StringName, int] = {}
 var _world_items: Dictionary[int, Dictionary] = {}
 var _next_entity_id: int = 1
 
-var _hands: Dictionary[int, Dictionary] = {} # player_id -> {"item_id", "count"}
+var _held_by_player: Dictionary[int, Array] = {} # player_id -> [entity_id, ...]
 var _hand_capacity: int = 1
 
 var _upgrade_levels: Dictionary[StringName, int] = {}
+
+var _tools: Dictionary[int, Dictionary] = {}
 
 func _ready() -> void:
 	CommandService.dispatch(BuyUpgradeCommand.new(1, &"faster_fishing"))
 	CommandService.process_queue()
 	print("No money: ", GameState.get_upgrade_level(&"faster_fishing")) # 0
 
-	GameState.add_resource(&"money", 100)
-	CommandService.dispatch(BuyUpgradeCommand.new(1, &"faster_fishing"))
-	CommandService.dispatch(BuyUpgradeCommand.new(1, &"faster_fishing"))
-	CommandService.process_queue()
-	print("Level: ", GameState.get_upgrade_level(&"faster_fishing")) # 2
-	print("Money: ", GameState.get_amount(&"money")) # 75 (100 - 10 - 15)
-	
-	var definition: UpgradeDefinition = UpgradeDatabase.get_definition(&"faster_fishing")
-	print("Effects: ", definition.effects.size())
-	for effect in definition.effects:
-		print("  '", effect.stat_id, "' op=", effect.operation, " value=", effect.value_per_level)
-	
-	print("Fishing speed: ", Stats.apply(StatIds.FISHING_SPEED, 1.0)) # 1.5 (level 2)
+	GameState.add_resource(&"money", 10000)
 	
 #region Resources
 
@@ -53,13 +43,18 @@ func try_spend(resource_id: StringName, amount: int) -> bool:
 func spawn_world_item(item_id: StringName, position: Vector3) -> int:
 	var entity_id: int = _next_entity_id
 	_next_entity_id += 1
-	_world_items[entity_id] = {"item_id": item_id, "position": position}
+	_world_items[entity_id] = {"item_id": item_id, "position": position, "holder": 0}
 	EventBus.world_item_spawned.emit(entity_id, item_id, position)
 	return entity_id
 
 func remove_world_item(entity_id: int) -> bool:
-	if not _world_items.erase(entity_id):
+	var item: Dictionary = get_world_item(entity_id)
+	if item.is_empty():
 		return false
+	var holder: int = item["holder"]
+	if holder != 0:
+		_held_by_player[holder] = get_held(holder).filter(func(id: int) -> bool: return id != entity_id)
+	_world_items.erase(entity_id)
 	EventBus.world_item_removed.emit(entity_id)
 	return true
 
@@ -131,10 +126,10 @@ func from_dict(data: Dictionary) -> void:
 
 #endregion 
 
-#region Hands
+#region Grab
 
-func get_hand(player_id: int) -> Dictionary:
-	return _hands.get(player_id, {"item_id": &"", "count": 0})
+func get_held(player_id: int) -> Array:
+	return _held_by_player.get(player_id, [])
 
 func get_hand_capacity() -> int:
 	return _hand_capacity
@@ -143,33 +138,46 @@ func set_hand_capacity(capacity: int) -> void:
 	_hand_capacity = maxi(1, capacity)
 	EventBus.hand_capacity_changed.emit(_hand_capacity)
 
-func can_hold(player_id: int, item_id: StringName) -> bool:
-	var hand: Dictionary = get_hand(player_id)
-	if hand["count"] == 0:
-		return true
-	return hand["item_id"] == item_id and hand["count"] < _hand_capacity
-
-func add_to_hand(player_id: int, item_id: StringName) -> bool:
-	if not can_hold(player_id, item_id):
+func can_grab(player_id: int, entity_id: int) -> bool:
+	var item: Dictionary = get_world_item(entity_id)
+	if item.is_empty() or item["holder"] != 0:
 		return false
-	var count: int = get_hand(player_id)["count"] + 1
-	_hands[player_id] = {"item_id": item_id, "count": count}
-	EventBus.hand_changed.emit(player_id, item_id, count)
+	var held: Array = get_held(player_id)
+	if held.size() >= _hand_capacity:
+		return false
+	if held.is_empty():
+		return true
+	return get_world_item(held[0])["item_id"] == item["item_id"] # Same type only
+
+func grab_item(player_id: int, entity_id: int) -> bool:
+	if not can_grab(player_id, entity_id):
+		return false
+	_world_items[entity_id]["holder"] = player_id
+	var held: Array = get_held(player_id).duplicate()
+	held.append(entity_id)
+	_held_by_player[player_id] = held
+	EventBus.item_grabbed.emit(player_id, entity_id)
 	return true
 
-## Returns the removed item id, or &"" if the hand was empty.
-func remove_from_hand(player_id: int) -> StringName:
-	var hand: Dictionary = get_hand(player_id)
-	if hand["count"] <= 0:
-		return &""
-	var item_id: StringName = hand["item_id"]
-	var count: int = hand["count"] - 1
-	if count == 0:
-		_hands.erase(player_id)
-	else:
-		_hands[player_id] = {"item_id": item_id, "count": count}
-	EventBus.hand_changed.emit(player_id, item_id, count)
-	return item_id
+## Releases everything the player holds. Returns the released entity ids.
+func release_all(player_id: int) -> Array:
+	var held: Array = get_held(player_id)
+	if held.is_empty():
+		return []
+	for entity_id in held:
+		if _world_items.has(entity_id):
+			_world_items[entity_id]["holder"] = 0
+	_held_by_player.erase(player_id)
+	EventBus.items_released.emit(player_id, held)
+	return held
+	
+## For items authored in the level (crates…), not spawned at runtime.
+## Does not emit world_item_spawned: the node already exists in the scene.
+func register_placed_item(item_id: StringName, position: Vector3) -> int:
+	var entity_id: int = _next_entity_id
+	_next_entity_id += 1
+	_world_items[entity_id] = {"item_id": item_id, "position": position, "holder": 0, "placed": true}
+	return entity_id
 
 #endregion
 
@@ -187,5 +195,31 @@ func set_upgrade_level(upgrade_id: StringName, level: int) -> void:
 	else:
 		_upgrade_levels[upgrade_id] = level
 	EventBus.upgrade_level_changed.emit(upgrade_id, level)
+
+#endregion
+
+#region Tools
+
+func has_tool(player_id: int, tool_id: StringName) -> bool:
+	return _tools.get(player_id, {}).has(tool_id)
+
+func is_tool_active(player_id: int, tool_id: StringName) -> bool:
+	return _tools.get(player_id, {}).get(tool_id, false)
+
+func grant_tool(player_id: int, tool_id: StringName) -> bool:
+	if has_tool(player_id, tool_id):
+		return false
+	if not _tools.has(player_id):
+		_tools[player_id] = {}
+	_tools[player_id][tool_id] = false
+	EventBus.tool_granted.emit(player_id, tool_id)
+	return true
+
+func set_tool_active(player_id: int, tool_id: StringName, active: bool) -> bool:
+	if not has_tool(player_id, tool_id):
+		return false
+	_tools[player_id][tool_id] = active
+	EventBus.tool_toggled.emit(player_id, tool_id, active)
+	return true
 
 #endregion

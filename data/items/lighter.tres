@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dt82apkouhii3"]
+
+[ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_7wnou"]
+[ext_resource type="PackedScene" uid="uid://12ootg5or1j3" path="res://features/items/lighter.tscn" id="2_qw11f"]
+
+[resource]
+script = ExtResource("1_7wnou")
+id = &"lighter"
+display_name = "Lighter"
+world_scene = ExtResource("2_qw11f")
+grants_tool = &"lighter"
+metadata/_custom_type_script = "uid://6mjbdc34rao3"

@@ -1,6 +1,8 @@
 class_name PlayerController
 extends CharacterBody3D
 
+@export var grabber: PlayerGrabber
+
 @export var player_id: int = 1 # Overridden by host/session in multiplayer later
 @export var move_speed: float = 5.0
 @export var sprint_speed: float = 8.0
@@ -8,6 +10,7 @@ extends CharacterBody3D
 @export var mouse_sensitivity: float = 0.002
 
 @onready var camera_pivot: Node3D = $CameraPivot
+
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -27,7 +30,10 @@ func _physics_process(delta: float) -> void:
 		
 	var can_control: bool = Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 	if !can_control:
-		return	
+		return
+	
+	if grabber and grabber.is_rotating():
+		return
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity

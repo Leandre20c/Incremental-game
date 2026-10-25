@@ -15,6 +15,11 @@ extends Resource
 ## 0 = unlimited.
 @export var max_level: int = 1
 
+@export_group("Preview")
+## Stat shown as "current -> next" in menus. Empty = no preview.
+@export var preview_stat: StatDefinition
+
+
 @export_group("Effects")
 @export var effects: Array[UpgradeEffect] = []
 
