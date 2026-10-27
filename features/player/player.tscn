@@ -61,5 +61,14 @@ script = ExtResource("5_6xbq4")
 flicker_amount = 0.56
 flicker_speed = 32.815
 
-[node name="PlayerPlacer" type="Node3D" parent="." unique_id=641943773]
+[node name="DiveTorchLight" type="SpotLight3D" parent="." unique_id=76023248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36048943, 1.1626575, -0.6946523)
+light_color = Color(0.8993607, 0.8327798, 0.6020731, 1)
+spot_angle = 20.0
+spot_angle_attenuation = 3.0314324
+script = ExtResource("5_6xbq4")
+tool_id = &"dive_light"
+
+[node name="PlayerPlacer" type="Node3D" parent="." unique_id=641943773 node_paths=PackedStringArray("grabber")]
 script = ExtResource("9_k34i2")
+grabber = NodePath("../PlayerGrabber")

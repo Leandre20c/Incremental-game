@@ -1,0 +1,10 @@
+[gd_resource type="BoxMesh" format=3 uid="uid://chepm3706jaeq"]
+
+[ext_resource type="Texture2D" uid="uid://csn7twfju0igg" path="res://assets/PSX Textures/256/Color Maps/metal_rusty_tsk_1_1.png" id="1_p7kx0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1pyse"]
+albedo_texture = ExtResource("1_p7kx0")
+
+[resource]
+material = SubResource("StandardMaterial3D_1pyse")
+size = Vector3(1, 0.05, 1)

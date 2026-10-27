@@ -88,11 +88,9 @@ func _rebuild_shape() -> void:
 
 func _physics_process(delta: float) -> void:	
 	if Engine.is_editor_hint():
-		return # Shape preview only in the editor
-	
-	print("enabled=", enabled, " power=", _power, " monitoring=", monitoring, " bodies=", get_overlapping_bodies().size())
+		return # Shape preview only in the edito
 		
-	if not enabled or not monitorable:
+	if not enabled or not monitoring:
 		return
 	if not multiplayer.is_server():
 		return # The host simulates physics, clients only receive positions

@@ -4,7 +4,7 @@ extends Resource
 
 @export var id: StringName = &""
 @export var display_name: String = ""
-@export_multiline() var description: String = "description"
+@export_multiline var description: String = "" ## Shown in the buy menu. Empty = hidden
 @export var icon: Texture2D
 @export var world_scene: PackedScene
 @export var sellable: bool = false:
@@ -19,7 +19,13 @@ extends Resource
 	set(value):
 		placeable = value
 		notify_property_list_changed()
-@export_range(0.0, 90.0) var max_tilt_degrees: float = 35.0 ## Steeper than this cannot be placed
+
+@export_group("Grid")
+@export var snaps_to_grid: bool = false: ## Snaps on the build grid while held (grid key toggles it). For floors, walls, roofs…
+	set(value):
+		snaps_to_grid = value
+		notify_property_list_changed()
+@export var grid_thickness: float = 0.05 ## Size along its local Y: it rests on the grid plane instead of crossing it
 
 @export_group("Power")
 @export_range(0, 10) var max_power_levels: int = 0 ## 0 = no power settings. Levels shown in the machine menu
@@ -37,22 +43,17 @@ extends Resource
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "sell_value_stat" and not sellable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
-	if property.name in ["max_tilt_degrees", "max_power_levels", "unlocked_power_levels_stat"] and not placeable:
+	if property.name == "snaps_to_grid" and not placeable:
+		property.usage &= ~PROPERTY_USAGE_EDITOR
+	if property.name == "grid_thickness" and not (placeable and snaps_to_grid):
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 	if property.name in ["buy_cost", "buy_cost_resource_id"] and not buyable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
-	if property.name in ["max_tilt_degrees", "max_power_levels", "unlocked_power_levels_stat", "starts_powered"] and not placeable:
+	if property.name in ["max_power_levels", "unlocked_power_levels_stat", "starts_powered"] and not placeable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 
 func can_be_sold() -> bool:
 	return sellable and sell_value_stat != null and sell_value_stat.base_value > 0
-
-## True if the item may be anchored with this orientation.
-func accepts_rotation(rotation: Quaternion) -> bool:
-	if not placeable:
-		return false
-	var up: Vector3 = Basis(rotation).y
-	return rad_to_deg(up.angle_to(Vector3.UP)) <= max_tilt_degrees
 
 func has_power_settings() -> bool:
 	return max_power_levels > 0

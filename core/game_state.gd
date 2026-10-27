@@ -105,6 +105,17 @@ func anchor_item(entity_id: int, position: Vector3, rotation: Quaternion) -> boo
 func is_anchored(entity_id: int) -> bool:
 	return get_world_item(entity_id).get("anchored", false)
 
+## True if a placed item already sits exactly there, facing the same axis (two grid pieces on one spot).
+func is_slot_taken(position: Vector3, rotation: Quaternion) -> bool:
+	var up: Vector3 = Basis(rotation).y
+	for entity_id in _world_items:
+		var item: Dictionary = _world_items[entity_id]
+		if not item["anchored"] or item["position"].distance_to(position) > 0.01:
+			continue
+		if absf(Basis(item["rotation"]).y.dot(up)) > 0.99:
+			return true
+	return false
+	
 #endregion
 
 #region Power

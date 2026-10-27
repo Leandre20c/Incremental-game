@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dbdenviapsm40"]
+
+[ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_2eluu"]
+[ext_resource type="Texture2D" uid="uid://dpo5m1fdqj7k8" path="res://assets/machines_pictures/steel_panel.png" id="1_u8hrw"]
+[ext_resource type="PackedScene" uid="uid://cp0v5a60i1kr2" path="res://features/items/steel_panel.tscn" id="3_lv122"]
+
+[resource]
+script = ExtResource("1_2eluu")
+id = &"steel_panel"
+display_name = "Steel Panel"
+description = "A sheet of riveted steel torn from the old hull. Floor, wall or roof: it depends how you hold it."
+icon = ExtResource("1_u8hrw")
+world_scene = ExtResource("3_lv122")
+placeable = true
+snaps_to_grid = true
+buyable = true
+buy_cost = 25
+metadata/_custom_type_script = "uid://6mjbdc34rao3"

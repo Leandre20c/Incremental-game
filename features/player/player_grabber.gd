@@ -52,6 +52,9 @@ var _last_yaw_basis: Basis = Basis.IDENTITY
 var _target_basis: Basis = Basis.IDENTITY ## Orientation voulue, en coordonnées monde
 var _prev_yaw_basis: Basis = Basis.IDENTITY ## Cap caméra à la frame précédente
 
+var _snap_active: bool = false ## Held item locked on a grid spot (see set_snap)
+var _snap_transform: Transform3D = Transform3D.IDENTITY
+
 
 func _ready() -> void:
 	assert(hold_point != null, "PlayerGrabber needs a hold_point Marker3D")
@@ -62,6 +65,30 @@ func _ready() -> void:
 
 func is_rotating() -> bool:
 	return _rotating
+
+
+## Where the player holds things and the orientation they want, in world space.
+## Used by the placer to snap the held item on the build grid.
+func get_hold_transform() -> Transform3D:
+	return Transform3D(_target_basis, hold_point.global_position)
+
+
+## Locks the first held item at a fixed transform (grid snapping) instead of following the hold point.
+## Call every frame while snapping; clear_snap() or a release gives it back to the spring.
+func set_snap(snap: Transform3D) -> void:
+	_snap_transform = snap
+	_snap_active = true
+
+
+func clear_snap() -> void:
+	if not _snap_active:
+		return
+	_snap_active = false
+	for body in _held:
+		if is_instance_valid(body):
+			body.freeze = false
+			body.sleeping = false
+			body.linear_velocity = Vector3.ZERO
 
 
 # --- Input -----------------------------------------------------------------
@@ -117,6 +144,11 @@ func _physics_process(delta: float) -> void:
 		# Apply only how much the camera turned since last frame
 		_target_basis = (yaw_now * _prev_yaw_basis.inverse() * _target_basis).orthonormalized()
 	_prev_yaw_basis = yaw_now
+
+	if _snap_active:
+		_apply_snap()
+		return
+
 	var omega: float = follow_frequency
 
 	for i in _held.size():
@@ -168,6 +200,14 @@ func _is_touching_obstacle(body: RigidBody3D) -> bool:
 		if other is CollisionObject3D and (other.collision_layer & obstacle_mask) != 0:
 			return true
 	return false
+
+
+## Snapped: the item sits exactly on its grid spot, frozen so nothing pushes it while aiming.
+func _apply_snap() -> void:
+	var body: RigidBody3D = _held[0]
+	var scale: Vector3 = body.global_basis.get_scale()
+	body.freeze = true
+	body.global_transform = Transform3D(_snap_transform.basis * Basis.from_scale(scale), _snap_transform.origin)
 
 
 # --- Rotation --------------------------------------------------------------
@@ -263,9 +303,13 @@ func _on_item_grabbed(grabber_id: int, entity_id: int) -> void:
 func _on_items_released(releaser_id: int, _entity_ids: Array) -> void:
 	if releaser_id != player_id:
 		return
+	var was_snapped: bool = _snap_active
+	_snap_active = false
 	for body in _held:
 		if not is_instance_valid(body):
 			continue
+		if was_snapped:
+			body.freeze = false # Anchorable freezes it again right after if it is being placed
 		body.gravity_scale = 1.0
 		if _throw_on_release:
 			var mass_factor: float = clampf(

@@ -70,9 +70,14 @@ func _build_text() -> String:
 	var item_lines: PackedStringArray = []
 	if _is_placeable(_entity_id):
 		item_lines.append(_format("place_held", "Place"))
+		var placer: PlayerPlacer = get_tree().get_first_node_in_group(&"player_placer") as PlayerPlacer
+		if placer != null and placer.can_snap():
+			item_lines.append(_format("toggle_grid", "Grid: %s" % ("ON" if placer.is_grid_enabled() else "OFF")))
 	var action: SecondaryAction = _get_held_action()
 	if action != null:
 		item_lines.append(_format("interact_secondary", action.get_prompt_text()))
+		if action.has_long_action():
+			item_lines.append("[Hold %s] %s" % [_get_input_label("interact_secondary"), action.get_long_prompt_text()])
 	if not item_lines.is_empty():
 		text_lines.append(" | ".join(item_lines))
 

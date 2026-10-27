@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dbmuv1fh4kn0u"]
+
+[ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_2rumc"]
+[ext_resource type="PackedScene" uid="uid://csb8ir0egv253" path="res://features/items/dive_torch.tscn" id="2_2rumc"]
+
+[resource]
+script = ExtResource("1_2rumc")
+id = &"dive_torch"
+display_name = "Dive torch"
+description = "Someone left it on the desk. It still lights up the dark."
+world_scene = ExtResource("2_2rumc")
+grants_tool = &"dive_torch"
+metadata/_custom_type_script = "uid://6mjbdc34rao3"

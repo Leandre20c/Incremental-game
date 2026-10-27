@@ -27,7 +27,7 @@ func _on_tool_granted(grabber_id: int, tool_id: StringName) -> void:
 	if grabber_id != player_id:
 		return
 	
-	_tool_name = tool_id
+	_tool_name = ItemDatabase.get_definition(tool_id).display_name
 	_build_text()
 	visible = true
 	_fade_to(1.0)

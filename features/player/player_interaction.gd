@@ -2,8 +2,8 @@ class_name PlayerInteraction
 extends RayCast3D
 
 ## Primary key: focused object (tap or hold, see Interactable.hold_duration).
-## Secondary key: the held object's action if it has one, else the focused object's
-## (tap, or long press when the action offers one).
+## Secondary key: the held object's action if it has one, else the focused object's.
+## Tap, or long press when the action offers one (the tap then fires on release).
 
 signal focus_changed(interactable: Interactable)
 signal hold_progress_changed(ratio: float)
@@ -14,7 +14,8 @@ signal hold_progress_changed(ratio: float)
 var _current: Interactable = null
 var _hold_time: float = 0.0
 var _is_holding: bool = false
-var _secondary_time: float = -1.0 ## How long the secondary key has been held on the focused object. -1 = not pressed
+var _secondary_time: float = -1.0 ## How long the secondary key has been held. -1 = not pressed
+var _secondary_action: SecondaryAction ## The action the secondary key went down on
 
 func _ready() -> void:
 	var owner_body: CollisionObject3D = owner as CollisionObject3D
@@ -30,9 +31,7 @@ func _physics_process(delta: float) -> void:
 		_cancel_secondary()
 		return
 
-	# The held object owns the secondary key, the focused one gets it otherwise
-	if not _process_held_secondary():
-		_process_focused_secondary(delta)
+	_process_secondary(delta)
 
 	if _current == null or not _current.enabled:
 		_stop_hold()
@@ -70,7 +69,6 @@ func _update_focus() -> void:
 		_current = null
 		_is_holding = false
 		_hold_time = 0.0
-		_cancel_secondary()
 		hold_progress_changed.emit(0.0)
 		focus_changed.emit(null)
 
@@ -81,7 +79,6 @@ func _update_focus() -> void:
 	if _current:
 		_stop_hold() # Must end the hold on the OLD target before switching
 		_current.unfocus(player_id)
-	_cancel_secondary()
 	_current = next
 	if _current:
 		_current.focus(player_id)
@@ -101,27 +98,19 @@ func _stop_hold() -> void:
 
 # --- Secondary key ---------------------------------------------------------
 
-## Tap on the held object. Returns true if the held object owns the key.
-func _process_held_secondary() -> bool:
+## Same rules for the held object and the focused one: tap, or long press when offered.
+func _process_secondary(delta: float) -> void:
 	var action: SecondaryAction = _get_held_secondary()
-	if action == null:
-		return false
-	_cancel_secondary()
-	if Input.is_action_just_pressed("interact_secondary"):
-		action.perform(player_id)
-	return true
-
-## Tap, or long press when the action offers one (the tap then fires on release).
-func _process_focused_secondary(delta: float) -> void:
-	var action: SecondaryAction = null
-	if _current != null and _current.enabled:
+	if action == null and _current != null and _current.enabled:
 		action = _current.get_secondary_action()
+	if action != _secondary_action:
+		_cancel_secondary() # The target changed while the key was down
 	if action == null:
-		_cancel_secondary()
 		return
 
 	if Input.is_action_just_pressed("interact_secondary"):
 		if action.has_long_action():
+			_secondary_action = action
 			_secondary_time = 0.0 # Wait to know if it is a tap or a long press
 		else:
 			action.perform(player_id)
@@ -141,10 +130,12 @@ func _process_focused_secondary(delta: float) -> void:
 		action.perform_long(player_id)
 
 func _cancel_secondary() -> void:
+	_secondary_action = null
 	if _secondary_time >= 0.0:
 		_secondary_time = -1.0
 		hold_progress_changed.emit(0.0)
 
+## The held object's action, if it can be used in hand.
 func _get_held_secondary() -> SecondaryAction:
 	var held: Array = GameState.get_held(player_id)
 	if held.is_empty():

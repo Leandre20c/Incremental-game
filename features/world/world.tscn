@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bwukwcmdf6aoo" path="res://features/sell_zone/sell_zone.tscn" id="11_jyrh7"]
 [ext_resource type="PackedScene" uid="uid://bxwkqb3f8uibr" path="res://assets/Furniture/chair_mp_4_1.glb" id="12_4qd3p"]
 [ext_resource type="PackedScene" uid="uid://bwtb2amwx45kh" path="res://assets/models/pc_keyboard_mp_1.glb" id="13_4bjqq"]
+[ext_resource type="PackedScene" uid="uid://cfiyane10q62n" path="res://assets/models/note_wet.glb" id="13_y42da"]
 [ext_resource type="Script" uid="uid://dc21xqmckx7yr" path="res://components/interactable/menu_interactable.gd" id="14_5dv0u"]
 [ext_resource type="Texture2D" uid="uid://drom02qp0au0n" path="res://assets/models/pc_monitor_mp_1_pc_monitor_mp_1.png" id="14_idxe3"]
 [ext_resource type="PackedScene" uid="uid://dtlq7k5bil4gt" path="res://assets/models/pc_mouse_mp_2.glb" id="14_jyrh7"]
@@ -39,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://cpk5aa7bwyod2" path="res://assets/PSX Textures/256/Color Maps/misc_tx_4.png" id="33_3yhjf"]
 [ext_resource type="PackedScene" uid="uid://dqcyp2fio8xob" path="res://assets/models/gauge_panel.glb" id="36_je2ja"]
 [ext_resource type="Script" uid="uid://dbu5q7ta1ugvc" path="res://features/shop/delivery_point.gd" id="39_gcx6g"]
+[ext_resource type="Script" uid="uid://cd2j8po4qxukj" path="res://features/grid/build_grid.gd" id="40_27spa"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_1pyse"]
 radius = 5.629883
@@ -387,6 +389,9 @@ transform = Transform3D(0.8954197, 0, -0.44522303, 0, 1, 0, 0.44522303, 0, 0.895
 collision_layer = 2
 collision_mask = 0
 
+[node name="note_wet2" parent="Builds/Desk" unique_id=1460625181 instance=ExtResource("13_y42da")]
+transform = Transform3D(1.0700791, 0, 1.0511569, 0, 1.5, 0, -1.0511569, 0, 1.0700791, 0.36613327, 0.96000004, 0.2531024)
+
 [node name="ComputerInteractable" type="StaticBody3D" parent="Builds/Desk" unique_id=89978079]
 collision_layer = 2
 collision_mask = 0
@@ -455,9 +460,9 @@ transform = Transform3D(0.33161467, 0.93268514, -0.14188057, -0.93455696, 0.3453
 transform = Transform3D(0.11634785, 0.95642316, 0.26780266, 0.0635546, 0.26191163, -0.96299696, -0.9911736, 0.12906265, -0.03031218, -0.39374924, 1.0704832, 0.04644108)
 
 [node name="LighterSpawnPoint" type="Marker3D" parent="Builds/Desk" unique_id=813011313]
-transform = Transform3D(0.7125036, 0, -0.70166844, 0, 1, 0, 0.70166844, 0, 0.7125036, 0.55441093, 0.9634876, 0.36492825)
+transform = Transform3D(0.4023531, 0, 0.91548455, 0, 1, 0, -0.91548455, 0, 0.4023531, 0.61823106, 0.9634876, 0.3533394)
 script = ExtResource("29_ceiip")
-item_id = &"lighter"
+item_id = &"dive_torch"
 
 [node name="PerchFishingSpot" parent="Builds" unique_id=611738445 instance=ExtResource("4_vjnib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.804588, 0, 0)
@@ -624,5 +629,9 @@ mesh = ExtResource("32_57b4o")
 [node name="ItemDelivery" type="Marker3D" parent="Builds" unique_id=355182271]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 16.927906, -12.430594)
 script = ExtResource("39_gcx6g")
+
+[node name="BuildGrid" type="GridMap" parent="." unique_id=1494708486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.567, 0)
+script = ExtResource("40_27spa")
 
 [editable path="Builds/PerchFishingSpot"]

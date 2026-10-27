@@ -3,7 +3,8 @@ extends SecondaryAction
 
 ## Child of a machine body. Turns its power state (GameState) into a power multiplier:
 ## 0 = off or not running, 1 = level 1, then +level_step for each level above.
-## Tap the secondary key: switch on/off (placed or in hand). Long press on a placed machine: settings menu.
+## Tap the secondary key: switch on/off. Long press: settings menu (levels).
+## Both work on the machine placed, lying on the floor or in hand.
 ## Connect power_changed to the parts that run (WindZone, BounceZone, Spinner…).
 
 signal power_changed(power: float)
@@ -42,10 +43,10 @@ func create_command(player_id: int) -> Command:
 
 # --- Long press: settings menu ---------------------------------------------
 
+## Only machines with intensity levels have a menu. Placed, loose or held.
 func has_long_action() -> bool:
-	var entity_id: int = _get_entity_id()
-	var definition: ItemDefinition = ItemDatabase.get_definition(GameState.get_world_item(entity_id).get("item_id", &""))
-	return definition != null and definition.has_power_settings() and GameState.is_anchored(entity_id)
+	var definition: ItemDefinition = ItemDatabase.get_definition(GameState.get_world_item(_get_entity_id()).get("item_id", &""))
+	return definition != null and definition.has_power_settings()
 
 func get_long_prompt_text() -> String:
 	return "%s (Lv %d)" % [settings_text, GameState.get_power_level(_get_entity_id())]

@@ -1,5 +1,5 @@
 class_name ToolLight
-extends OmniLight3D
+extends Light3D
 
 ## Shows a light while the given tool is active. Also handles its toggle input.
 

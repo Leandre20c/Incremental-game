@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cp0v5a60i1kr2"]
+
+[ext_resource type="BoxMesh" uid="uid://chepm3706jaeq" path="res://assets/models/new_box_mesh.tres" id="1_stq8u"]
+[ext_resource type="Script" uid="uid://wsc1s22bnqsu" path="res://components/interactable/pickupable.gd" id="2_mj5ly"]
+[ext_resource type="Script" uid="uid://dy2g8llvglvg2" path="res://components/anchorable/anchorable.gd" id="3_gnfds"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qar04"]
+size = Vector3(1, 0.05, 1)
+
+[node name="SteelPanel" type="RigidBody3D" unique_id=1062878149]
+collision_layer = 4
+collision_mask = 7
+mass = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=335252820]
+mesh = ExtResource("1_stq8u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=919102979]
+shape = SubResource("BoxShape3D_qar04")
+
+[node name="Pickupable" type="Node3D" parent="." unique_id=1865300190]
+script = ExtResource("2_mj5ly")
+display_name = "Steel panel"
+prompt_text = "Grab"
+
+[node name="Anchorable" type="Node3D" parent="." unique_id=207931536]
+script = ExtResource("3_gnfds")
+anchored_collision_layer = 2

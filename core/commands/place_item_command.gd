@@ -2,7 +2,7 @@ class_name PlaceItemCommand
 extends Command
 
 ## Anchors the item a player is holding with the given position and orientation.
-## Physical checks (support, overlaps) are done by the placer on the simulating peer.
+## Physical checks (touching the ground, overlaps) are done by the placer on the simulating peer.
 
 var entity_id: int = -1
 var position: Vector3 = Vector3.ZERO
@@ -19,8 +19,10 @@ func execute() -> bool:
 	if item.is_empty() or item["holder"] != player_id:
 		return false # Only the player holding the item can place it
 	var definition: ItemDefinition = ItemDatabase.get_definition(item["item_id"])
-	if definition == null or not definition.accepts_rotation(rotation):
+	if definition == null or not definition.placeable:
 		return false
+	if definition.snaps_to_grid and GameState.is_slot_taken(position, rotation):
+		return false # Another grid piece is already there (other player, same frame…)
 	GameState.release_all(player_id)
 	return GameState.anchor_item(entity_id, position, rotation)
 

@@ -4,15 +4,20 @@ extends Node
 ## Child of a world item RigidBody3D. When the item is anchored in GameState,
 ## freezes it at its placed transform so players and items can no longer push it.
 ## Grabbing it again unfreezes it.
+## Optionally moves it to other collision layers while placed (e.g. Terrain, so players walk on floors).
 
 signal anchor_changed(anchored: bool)
 
+@export_flags_3d_physics var anchored_collision_layer: int = 0 ## Layers while placed. 0 = keep the item's own layers
+
 var _body: RigidBody3D
+var _free_collision_layer: int
 
 func _ready() -> void:
 	_body = get_parent() as RigidBody3D
 	assert(_body != null, "Anchorable must be a child of a RigidBody3D")
 	_body.freeze_mode = RigidBody3D.FREEZE_MODE_STATIC # Frozen = behaves like a StaticBody3D
+	_free_collision_layer = _body.collision_layer
 	EventBus.item_anchor_changed.connect(_on_item_anchor_changed)
 	_sync.call_deferred() # The spawner sets the entity_id meta right after add_child
 
@@ -37,7 +42,10 @@ func _apply(anchored: bool) -> void:
 		_body.angular_velocity = Vector3.ZERO
 		_body.global_transform = Transform3D(Basis(item["rotation"]) * Basis.from_scale(scale), item["position"])
 		_body.reset_physics_interpolation()
+		if anchored_collision_layer != 0:
+			_body.collision_layer = anchored_collision_layer
 	else:
+		_body.collision_layer = _free_collision_layer
 		_body.freeze = false
 		_body.sleeping = false
 	anchor_changed.emit(anchored)

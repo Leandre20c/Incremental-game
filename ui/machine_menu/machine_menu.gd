@@ -1,7 +1,7 @@
 class_name MachineMenu
 extends CanvasLayer
 
-## Settings of a placed machine: power off, or pick one of the unlocked intensity levels.
+## Settings of a machine (placed, loose or held): power off, or pick one of the unlocked intensity levels.
 ## View only: every choice dispatches a SetPowerCommand.
 
 const MENU_ID: StringName = &"machine"
@@ -21,7 +21,7 @@ func _ready() -> void:
 	_close_button.pressed.connect(close)
 	EventBus.machine_menu_requested.connect(_on_machine_menu_requested)
 	EventBus.item_power_changed.connect(_on_item_power_changed)
-	EventBus.item_anchor_changed.connect(_on_item_anchor_changed)
+	EventBus.item_grabbed.connect(_on_item_grabbed)
 	EventBus.world_item_removed.connect(_on_world_item_removed)
 	EventBus.upgrade_level_changed.connect(_on_upgrade_level_changed)
 
@@ -91,9 +91,9 @@ func _on_item_power_changed(entity_id: int) -> void:
 	if _root.visible and entity_id == _entity_id:
 		_rebuild()
 
-## Close if someone picks the machine up.
-func _on_item_anchor_changed(entity_id: int, anchored: bool) -> void:
-	if _root.visible and entity_id == _entity_id and not anchored:
+## Close if another player picks the machine up.
+func _on_item_grabbed(grabber_id: int, entity_id: int) -> void:
+	if _root.visible and entity_id == _entity_id and grabber_id != player_id:
 		close()
 
 func _on_world_item_removed(entity_id: int) -> void:
