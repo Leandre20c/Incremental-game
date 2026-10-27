@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://l2xhrgg5drov"]
+
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_1hvlb"]
+
+[resource]
+script = ExtResource("1_1hvlb")
+id = &"fan_force"
+display_name = "Fan force"
+display_format = "%d"
+metadata/_custom_type_script = "uid://djllv0njt17nk"

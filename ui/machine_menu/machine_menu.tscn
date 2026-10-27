@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bjibvohb036a"]
+
+[ext_resource type="Script" uid="uid://wmpvdphn3i2f" path="res://ui/machine_menu/machine_menu.gd" id="1_ju4ui"]
+
+[node name="MachineMenu" type="CanvasLayer" unique_id=1910982192]
+script = ExtResource("1_ju4ui")
+
+[node name="Root" type="Control" parent="." unique_id=262414500]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Root" unique_id=1721227324]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/CenterContainer" unique_id=1842435447]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/CenterContainer/MarginContainer" unique_id=133736813]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Root/CenterContainer/MarginContainer/VBoxContainer" unique_id=1915757789]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Levels" type="HBoxContainer" parent="Root/CenterContainer/MarginContainer/VBoxContainer" unique_id=1407263257]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Root/CenterContainer/MarginContainer/VBoxContainer" unique_id=18573738]
+unique_name_in_owner = true
+layout_mode = 2

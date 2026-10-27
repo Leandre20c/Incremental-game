@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://tsf1u2j21bdi"]
+
+[ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_r4cpv"]
+[ext_resource type="Resource" uid="uid://l2xhrgg5drov" path="res://data/stats/machines/fan_power_levels.tres" id="2_mu3eq"]
+[ext_resource type="PackedScene" uid="uid://n2hdywmwkag" path="res://features/items/fan.tscn" id="2_r4cpv"]
+
+[resource]
+script = ExtResource("1_r4cpv")
+id = &"fan"
+display_name = "Fan"
+world_scene = ExtResource("2_r4cpv")
+placeable = true
+max_tilt_degrees = 90.0
+max_power_levels = 3
+unlocked_power_levels_stat = ExtResource("2_mu3eq")
+metadata/_custom_type_script = "uid://6mjbdc34rao3"

@@ -4,6 +4,10 @@
 [ext_resource type="Script" uid="uid://b545qdtjf80pb" path="res://components/placed_item/placed_item.gd" id="2_fmrgw"]
 [ext_resource type="ArrayMesh" uid="uid://r0w7av7y50v3" path="res://assets/models/supply_crate_1_empty_supply_crate_1_empty.res" id="2_g61el"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_umpw6"]
+friction = 2.0
+rough = true
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_1pyse"]
 size = Vector3(0.689209, 0.041107178, 0.43103027)
 
@@ -48,6 +52,8 @@ transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, 0, 0)
 collision_layer = 4
 collision_mask = 7
 mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_umpw6")
+angular_damp = 2.0
 
 [node name="Pickable" type="Node3D" parent="." unique_id=144025157]
 script = ExtResource("1_f600l")

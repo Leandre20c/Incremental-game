@@ -12,9 +12,38 @@ extends Resource
 @export var sell_value_stat: StatDefinition
 @export var grants_tool: StringName = &"" ## If set, collecting this item gives the player this tool
 
+@export_group("Placement")
+@export var placeable: bool = false: ## Can be anchored in place by the player
+	set(value):
+		placeable = value
+		notify_property_list_changed()
+@export_range(0.0, 90.0) var max_tilt_degrees: float = 35.0 ## Steeper than this cannot be placed
+
+@export_group("Power")
+@export_range(0, 10) var max_power_levels: int = 0 ## 0 = no power settings. Levels shown in the machine menu
+@export var unlocked_power_levels_stat: StatDefinition ## Upgradable number of usable levels. Empty = all of them
+
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "sell_value_stat" and not sellable:
+		property.usage &= ~PROPERTY_USAGE_EDITOR
+	if property.name in ["max_tilt_degrees", "max_power_levels", "unlocked_power_levels_stat"] and not placeable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 
 func can_be_sold() -> bool:
 	return sellable and sell_value_stat != null and sell_value_stat.base_value > 0
+
+## True if the item may be anchored with this orientation.
+func accepts_rotation(rotation: Quaternion) -> bool:
+	if not placeable:
+		return false
+	var up: Vector3 = Basis(rotation).y
+	return rad_to_deg(up.angle_to(Vector3.UP)) <= max_tilt_degrees
+
+func has_power_settings() -> bool:
+	return max_power_levels > 0
+
+## Levels the players can currently pick (1 at least).
+func get_unlocked_power_levels() -> int:
+	if unlocked_power_levels_stat == null:
+		return max_power_levels
+	return clampi(int(Stats.get_value(unlocked_power_levels_stat)), 1, max_power_levels)

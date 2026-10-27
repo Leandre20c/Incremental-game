@@ -2,6 +2,7 @@ class_name Interactable
 extends Node3D
 
 ## Component: child of any CollisionObject3D. Subclasses override create_command().
+## A sibling SecondaryAction, if any, adds a second action on the interact_secondary key.
 
 signal focused(player_id: int)
 signal unfocused(player_id: int)
@@ -33,11 +34,14 @@ const OUTLINE_SHADER: Shader = preload("res://components/outline/outline.gdshade
 var _body: CollisionObject3D
 var _meshes: Array[MeshInstance3D] = []
 var _outline_material: ShaderMaterial
+var _secondary: SecondaryAction
 
 func _ready() -> void:
 	_body = get_parent() as CollisionObject3D
 	assert(_body != null, "Interactable must be a child of a CollisionObject3D")
 	_body.set_meta(META_KEY, self)
+	
+	_secondary = SecondaryAction.find_on(_body)
 
 	for node in _body.find_children("*", "MeshInstance3D", true, false):
 		_meshes.append(node as MeshInstance3D)
@@ -47,6 +51,11 @@ func _ready() -> void:
 	_outline_material.set_shader_parameter("outline_color", outline_color)
 	_outline_material.set_shader_parameter("outline_width", outline_width)
 	_outline_material.set_shader_parameter("grow_from_center", outline_grow_from_center)
+
+	for child in _body.get_children():
+		if child is SecondaryAction:
+			_secondary = child
+			break
 
 static func find_on(collider: Object) -> Interactable:
 	if not is_instance_valid(collider) or not collider.has_meta(META_KEY):
@@ -71,6 +80,12 @@ func interact(player_id: int) -> void:
 	var cmd: Command = create_command(player_id)
 	if cmd:
 		CommandService.dispatch(cmd)
+
+## Extra actions on the interact_secondary key, or null if none is available right now.
+func get_secondary_action() -> SecondaryAction:
+	if _secondary != null and _secondary.is_available():
+		return _secondary
+	return null
 
 func get_prompt_position() -> Vector3:
 	return _body.global_position + prompt_offset

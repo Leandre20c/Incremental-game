@@ -43,8 +43,17 @@ func try_spend(resource_id: StringName, amount: int) -> bool:
 func spawn_world_item(item_id: StringName, position: Vector3) -> int:
 	var entity_id: int = _next_entity_id
 	_next_entity_id += 1
-	_world_items[entity_id] = {"item_id": item_id, "position": position, "holder": 0}
+	_world_items[entity_id] = _new_world_item(item_id, position)
 	EventBus.world_item_spawned.emit(entity_id, item_id, position)
+	return entity_id
+
+## For items authored in the level (crates…), not spawned at runtime.
+## Does not emit world_item_spawned: the node already exists in the scene.
+func register_placed_item(item_id: StringName, position: Vector3) -> int:
+	var entity_id: int = _next_entity_id
+	_next_entity_id += 1
+	_world_items[entity_id] = _new_world_item(item_id, position)
+	_world_items[entity_id]["placed"] = true
 	return entity_id
 
 func remove_world_item(entity_id: int) -> bool:
@@ -64,6 +73,60 @@ func get_world_item(entity_id: int) -> Dictionary:
 func get_world_item_count() -> int:
 	return _world_items.size()
 
+## Every world item entry has the same keys, whatever created it.
+func _new_world_item(item_id: StringName, position: Vector3) -> Dictionary:
+	return {
+		"item_id": item_id,
+		"position": position,
+		"rotation": Quaternion.IDENTITY,
+		"holder": 0,
+		"anchored": false,
+		"powered": true,
+		"power_level": 1,
+	}
+
+#endregion
+
+#region Placement
+
+## Fixes a free item in place. It stays there until a player grabs it again.
+func anchor_item(entity_id: int, position: Vector3, rotation: Quaternion) -> bool:
+	var item: Dictionary = get_world_item(entity_id)
+	if item.is_empty() or item["holder"] != 0:
+		return false
+	item["anchored"] = true
+	item["position"] = position
+	item["rotation"] = rotation.normalized()
+	EventBus.item_anchor_changed.emit(entity_id, true)
+	return true
+
+func is_anchored(entity_id: int) -> bool:
+	return get_world_item(entity_id).get("anchored", false)
+
+#endregion
+
+#region Power
+
+func is_powered(entity_id: int) -> bool:
+	return get_world_item(entity_id).get("powered", true)
+
+## Chosen intensity, kept while switched off.
+func get_power_level(entity_id: int) -> int:
+	return get_world_item(entity_id).get("power_level", 1)
+
+## Level the machine actually runs at: 0 when switched off.
+func get_effective_power_level(entity_id: int) -> int:
+	return get_power_level(entity_id) if is_powered(entity_id) else 0
+
+func set_power(entity_id: int, powered: bool, level: int) -> bool:
+	var item: Dictionary = get_world_item(entity_id)
+	if item.is_empty() or (item["powered"] == powered and item["power_level"] == level):
+		return false
+	item["powered"] = powered
+	item["power_level"] = level
+	EventBus.item_power_changed.emit(entity_id)
+	return true
+
 #endregion
 
 #region Serialization
@@ -77,9 +140,14 @@ func to_dict() -> Dictionary:
 	for entity_id in _world_items:
 		var item: Dictionary = _world_items[entity_id]
 		var p: Vector3 = item["position"]
+		var r: Quaternion = item["rotation"]
 		world_items[str(entity_id)] = {
 			"item_id": String(item["item_id"]),
 			"position": [p.x, p.y, p.z],
+			"rotation": [r.x, r.y, r.z, r.w],
+			"anchored": item["anchored"],
+			"power_level": item["power_level"],
+			"powered": item["powered"],
 		}
 	
 	var upgrades: Dictionary = {}
@@ -108,10 +176,16 @@ func from_dict(data: Dictionary) -> void:
 	for key in world_items:
 		var item: Dictionary = world_items[key]
 		var p: Array = item.get("position", [0.0, 0.0, 0.0])
+		var r: Array = item.get("rotation", [0.0, 0.0, 0.0, 1.0])
 		var entity_id: int = int(key)
 		var item_id: StringName = StringName(item.get("item_id", ""))
 		var position: Vector3 = Vector3(p[0], p[1], p[2])
-		_world_items[entity_id] = {"item_id": item_id, "position": position}
+		var entry: Dictionary = _new_world_item(item_id, position)
+		entry["rotation"] = Quaternion(r[0], r[1], r[2], r[3]).normalized()
+		entry["anchored"] = bool(item.get("anchored", false))
+		entry["power_level"] = int(item.get("power_level", 1))
+		entry["powered"] = bool(item.get("powered", true))
+		_world_items[entity_id] = entry
 		EventBus.world_item_spawned.emit(entity_id, item_id, position)
 
 	_next_entity_id = int(data.get("next_entity_id", 1))
@@ -152,7 +226,13 @@ func can_grab(player_id: int, entity_id: int) -> bool:
 func grab_item(player_id: int, entity_id: int) -> bool:
 	if not can_grab(player_id, entity_id):
 		return false
-	_world_items[entity_id]["holder"] = player_id
+	var item: Dictionary = _world_items[entity_id]
+	# Grabbing a placed item frees it. Emitted before item_grabbed so the body is unfrozen
+	# by the time the grabber starts pulling it.
+	if item["anchored"]:
+		item["anchored"] = false
+		EventBus.item_anchor_changed.emit(entity_id, false)
+	item["holder"] = player_id
 	var held: Array = get_held(player_id).duplicate()
 	held.append(entity_id)
 	_held_by_player[player_id] = held
@@ -170,14 +250,6 @@ func release_all(player_id: int) -> Array:
 	_held_by_player.erase(player_id)
 	EventBus.items_released.emit(player_id, held)
 	return held
-	
-## For items authored in the level (crates…), not spawned at runtime.
-## Does not emit world_item_spawned: the node already exists in the scene.
-func register_placed_item(item_id: StringName, position: Vector3) -> int:
-	var entity_id: int = _next_entity_id
-	_next_entity_id += 1
-	_world_items[entity_id] = {"item_id": item_id, "position": position, "holder": 0, "placed": true}
-	return entity_id
 
 #endregion
 

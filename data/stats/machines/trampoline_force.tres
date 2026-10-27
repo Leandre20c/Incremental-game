@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://cgpai35wjyj20"]
+
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_pighe"]
+
+[resource]
+script = ExtResource("1_pighe")
+id = &"trampoline_force"
+display_name = "Trampoline force"
+metadata/_custom_type_script = "uid://djllv0njt17nk"

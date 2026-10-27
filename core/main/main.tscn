@@ -89,6 +89,7 @@ adadadadadad
 adadadadadadad"
 horizontal_alignment = 1
 script = ExtResource("8_vxc0a")
+player_id = null
 
 [node name="ResourceCounter" parent="UI/MarginContainer" unique_id=2029592214 instance=ExtResource("5_k5wvu")]
 physics_interpolation_mode = 0

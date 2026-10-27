@@ -8,6 +8,7 @@ extends Node
 @export var player_id: int = 1
 @export var interaction: PlayerInteraction
 @export var hold_point: Marker3D ## Child of the interaction ray, moved along its -Z axis
+@export var throw_force_stat: StatDefinition
 
 @export_group("Follow")
 @export var follow_frequency: float = 12.0 ## Spring stiffness. Lower = more elastic, higher = stiffer (keep under ~25)
@@ -16,9 +17,9 @@ extends Node
 @export var stack_spacing: float = 0.2 ## Vertical spacing when holding several items
 
 @export_group("Throw")
-@export var throw_multiplier: float = 1.0 ## Extra boost on release
+@export var throw_multiplier: float = 0.53 ## Extra boost on release
 @export var throw_window: float = 0.1 ## Seconds of hold point motion considered for the throw
-@export var throw_reference_mass: float = 1.0 ## Objets plus légers ou égaux = vitesse de lancer complète
+@export var throw_reference_mass: float = 2 ## Objets plus légers ou égaux = vitesse de lancer complète
 @export_range(0.0, 1.0) var throw_mass_falloff: float = 0.5 ## 1 = réaliste (v ∝ 1/masse), 0.5 = plus doux, 0 = désactivé
 @export_range(0.0, 1.0) var min_throw_factor: float = 0.15 ## Même les objets très lourds gardent au moins ça
 
@@ -271,7 +272,10 @@ func _on_items_released(releaser_id: int, _entity_ids: Array) -> void:
 				pow(throw_reference_mass / body.mass, throw_mass_falloff),
 				min_throw_factor, 1.0
 			)
-			body.linear_velocity = (_throw_velocity * throw_multiplier * mass_factor).limit_length(max_speed)
+			# Base * upgrade * mass
+			var force: float = Stats.get_value_or(throw_force_stat, 1.0)
+			body.linear_velocity = (_throw_velocity * throw_multiplier * mass_factor * force) \
+					.limit_length(max_speed * force)
 		# Break: keep current velocity (it's already stuck against something)
 		body.angular_velocity = Vector3.ZERO
 		body.contact_monitor = false

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://gaw1d25ntqff"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_87gov"]
+[ext_resource type="Resource" uid="uid://l2xhrgg5drov" path="res://data/stats/machines/fan_power_levels.tres" id="2_j5nj0"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="2_ni4sq"]
+
+[sub_resource type="Resource" id="Resource_j5nj0"]
+script = ExtResource("1_87gov")
+stat = ExtResource("2_j5nj0")
+metadata/_custom_type_script = "uid://camjjo7x1u5qc"
+
+[resource]
+script = ExtResource("2_ni4sq")
+id = &"fan_gears_upgrade"
+display_name = "Fan gears"
+description = "Unlocks a stronger fan level"
+base_cost = 100
+cost_growth = 2.0
+max_level = 2
+preview_stat = ExtResource("2_j5nj0")
+effects = Array[ExtResource("1_87gov")]([SubResource("Resource_j5nj0")])
+metadata/_custom_type_script = "uid://87c8872je4ed"

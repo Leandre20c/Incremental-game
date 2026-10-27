@@ -6,5 +6,5 @@
 script = ExtResource("1_yaq6r")
 id = &"player_speed"
 display_name = "Player speed"
-base_value = 5.0
+base_value = 4.0
 metadata/_custom_type_script = "uid://djllv0njt17nk"

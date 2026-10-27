@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://b4e4ce8i3yjr2" path="res://data/upgrades/barracuda_fish/barracuda_fishing_speed.tres" id="8_8quc6"]
 [ext_resource type="Resource" uid="uid://b20u2ugf8aw0c" path="res://data/upgrades/player/player_throw_force_upgrade.tres" id="8_ve6n6"]
 [ext_resource type="Resource" uid="uid://ctyjnqdbhc8m" path="res://data/upgrades/barracuda_fish/barracuda_increase_value.tres" id="9_xy8g1"]
+[ext_resource type="Resource" uid="uid://gaw1d25ntqff" path="res://data/upgrades/machines/fan_gears_upgrade.tres" id="13_2jda8"]
 
 [node name="ComputerMenu" type="CanvasLayer" unique_id=1018229546]
 script = ExtResource("1_qjt67")
@@ -55,7 +56,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_00m6n")
-pages = [NodePath("../../PlayerUpgradesMenu"), NodePath("../../PerchUpgradesMenu"), NodePath("../../BarracudaUpgradesMenu")]
+pages = [NodePath("../../PlayerUpgradesMenu"), NodePath("../../PerchUpgradesMenu"), NodePath("../../BarracudaUpgradesMenu"), NodePath("../../MachineUpgradesMenu")]
 
 [node name="PlayerUpgradeButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs/MenuTabs" unique_id=1162449933]
 layout_mode = 2
@@ -73,7 +74,15 @@ text = "Perchs"
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_qiyo2")
 theme_override_font_sizes/font_size = 32
-text = "Fishing spot"
+text = "barracudas
+"
+
+[node name="MachinesUpgradeButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs/MenuTabs" unique_id=2133332404]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_qiyo2")
+theme_override_font_sizes/font_size = 32
+text = "Machines
+"
 
 [node name="CloseButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs" unique_id=336475852]
 unique_name_in_owner = true
@@ -217,3 +226,43 @@ upgrade = ExtResource("8_8quc6")
 [node name="FishingSpotValueUpgrade" parent="Root/MarginContainer/CenterContainer/VBoxContainer/BarracudaUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=461508971 instance=ExtResource("3_3tyn7")]
 layout_mode = 2
 upgrade = ExtResource("9_xy8g1")
+
+[node name="MachineUpgradesMenu" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=94711573]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/MachineUpgradesMenu" unique_id=1034835161]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/MachineUpgradesMenu/MarginContainer" unique_id=1415984689]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer/VBoxContainer/MachineUpgradesMenu/MarginContainer/VBoxContainer" unique_id=1982750040]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_5jset")
+theme_override_font_sizes/font_size = 48
+text = "barracuda upgrades"
+
+[node name="PanelContainer" type="Container" parent="Root/MarginContainer/CenterContainer/VBoxContainer/MachineUpgradesMenu/MarginContainer/VBoxContainer" unique_id=188728513]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/MachineUpgradesMenu/MarginContainer/VBoxContainer" unique_id=508044790]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer/MachineUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1563638386]
+layout_mode = 2
+
+[node name="FanGearsUpgrade" parent="Root/MarginContainer/CenterContainer/VBoxContainer/MachineUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=90733348 instance=ExtResource("3_3tyn7")]
+layout_mode = 2
+upgrade = ExtResource("13_2jda8")

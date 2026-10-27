@@ -6,5 +6,5 @@
 script = ExtResource("1_j0i13")
 id = &"player_jump"
 display_name = "Player jump force"
-base_value = 40.0
+base_value = 4.0
 metadata/_custom_type_script = "uid://djllv0njt17nk"

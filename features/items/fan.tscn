@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://n2hdywmwkag"]
+
+[ext_resource type="Script" uid="uid://cxsmwoj6sbhh3" path="res://components/spinner/spinner.gd" id="1_4s583"]
+[ext_resource type="ArrayMesh" uid="uid://jhi74vb0vayn" path="res://assets/models/Sketchfab_Scene_Side_psx_Material_0.res" id="1_t2hdp"]
+[ext_resource type="Script" uid="uid://4gl5mp5jwehb" path="res://components/powerable/powerable.gd" id="2_312gd"]
+[ext_resource type="ArrayMesh" uid="uid://duckp75tx0ig6" path="res://assets/models/Sketchfab_Scene_Fan_psx_Material_0.res" id="2_8416t"]
+[ext_resource type="Script" uid="uid://wsc1s22bnqsu" path="res://components/interactable/pickupable.gd" id="3_xc8x6"]
+[ext_resource type="Script" uid="uid://dy2g8llvglvg2" path="res://components/anchorable/anchorable.gd" id="4_cwrk4"]
+[ext_resource type="Script" uid="uid://b545qdtjf80pb" path="res://components/placed_item/placed_item.gd" id="5_4s583"]
+[ext_resource type="Script" uid="uid://c0k5cxkqdlq3f" path="res://components/wind_zone/wind_zone.gd" id="6_cwrk4"]
+[ext_resource type="Resource" uid="uid://l2xhrgg5drov" path="res://data/stats/machines/fan_power_levels.tres" id="7_chqml"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1pyse"]
+size = Vector3(1, 1, 3)
+
+[sub_resource type="Animation" id="Animation_jmft8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fan_pales:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.741765, -1.5707961, 1.5707961)]
+}
+
+[sub_resource type="Animation" id="Animation_xc8x6"]
+resource_name = "spinning"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fan_pales:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -1.5707964, 1.5707964), Vector3(6.2831855, -1.5707964, 1.5707964)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cwrk4"]
+_data = {
+&"RESET": SubResource("Animation_jmft8"),
+&"spinning": SubResource("Animation_xc8x6")
+}
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yp3gy"]
+height = 1.4673462
+radius = 0.072265625
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1pyse"]
+height = 0.30273438
+radius = 0.34179688
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ub5rx"]
+height = 0.04309082
+radius = 0.32910156
+
+[node name="Fan" type="RigidBody3D" unique_id=1339234563 node_paths=PackedStringArray("animation_player")]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_4s583")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="Powerable" type="Node3D" parent="." unique_id=416092140]
+script = ExtResource("2_312gd")
+runs_while_held = true
+
+[node name="Pickable" type="Node3D" parent="." unique_id=1517804667]
+script = ExtResource("3_xc8x6")
+display_name = "Fan"
+prompt_text = "Grab"
+
+[node name="Anchorable" type="Node3D" parent="." unique_id=1825896987]
+script = ExtResource("4_cwrk4")
+
+[node name="PlacedItem" type="Node3D" parent="." unique_id=1713354670]
+script = ExtResource("5_4s583")
+item_id = &"fan"
+
+[node name="WindZone" type="Area3D" parent="." unique_id=1238366696]
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("6_cwrk4")
+force_stat = ExtResource("7_chqml")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WindZone" unique_id=603018650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0002644062, 1.3170421, 1.5969908)
+shape = SubResource("BoxShape3D_1pyse")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=639611938]
+libraries/ = SubResource("AnimationLibrary_cwrk4")
+
+[node name="fan_pales" type="MeshInstance3D" parent="." unique_id=1789967790]
+transform = Transform3D(0.6755903, -6.3164904e-08, -0.73727727, 0.73727727, 1.4355318e-07, 0.6755903, 6.3164904e-08, -1, 1.4355318e-07, -0.0005197662, 1.3193302, 0.07331022)
+mesh = ExtResource("1_t2hdp")
+
+[node name="fan_frame" type="MeshInstance3D" parent="." unique_id=1639108006]
+transform = Transform3D(1, -1.3200474e-14, 0, 0, -4.371139e-08, 1, -1.3200473e-14, -1, -4.371139e-08, -1.1641532e-10, 0, -1.2665987e-07)
+mesh = ExtResource("2_8416t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1233013146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.73550415, 0)
+shape = SubResource("CylinderShape3D_yp3gy")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=761129820]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.3276026, 0.064453125)
+shape = SubResource("CylinderShape3D_1pyse")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=1985192009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.054260254, 0)
+shape = SubResource("CylinderShape3D_ub5rx")
+
+[connection signal="power_changed" from="Powerable" to="." method="set_power"]

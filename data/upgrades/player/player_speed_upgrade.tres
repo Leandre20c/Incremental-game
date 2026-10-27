@@ -2,10 +2,20 @@
 
 [ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_y6ggy"]
 [ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="2_00t27"]
+[ext_resource type="Resource" uid="uid://bmcsync2ms2ma" path="res://data/stats/player_stats/player_speed.tres" id="2_yfxru"]
+
+[sub_resource type="Resource" id="Resource_kt1oa"]
+script = ExtResource("1_y6ggy")
+stat = ExtResource("2_yfxru")
+value_per_level = 0.5
+metadata/_custom_type_script = "uid://camjjo7x1u5qc"
 
 [resource]
 script = ExtResource("2_00t27")
 id = &"player_speed_upgrade"
 display_name = "velocity"
 description = "player_speed_upgrade"
+max_level = 5
+preview_stat = ExtResource("2_yfxru")
+effects = Array[ExtResource("1_y6ggy")]([SubResource("Resource_kt1oa")])
 metadata/_custom_type_script = "uid://87c8872je4ed"

@@ -6,6 +6,7 @@ extends CanvasLayer
 
 @export var interaction: PlayerInteraction
 @export var action_name: StringName = &"interact_primary"
+@export var secondary_action_name: StringName = &"interact_secondary"
 @export var screen_offset: Vector2 = Vector2(0.0, -8.0)
 
 @onready var _displayname_label: Label = %DisplaynameLabel
@@ -45,6 +46,12 @@ func _process(_delta: float) -> void:
 		_panel.hide()
 		return
 
+	# The text can change while focused (machine placed, power level changed…)
+	var prompt: String = _build_prompt()
+	if _prompt_label.text != prompt:
+		_prompt_label.text = prompt
+		_panel.reset_size()
+
 	var screen_position: Vector2 = _to_root_screen(camera, camera.unproject_position(world_position))
 	_panel.position = (screen_position + screen_offset - Vector2(_panel.size.x * 0.5, _panel.size.y)).round()
 	_panel.show()
@@ -56,7 +63,7 @@ func _on_focus_changed(target: Interactable) -> void:
 		return
 	
 	_displayname_label.text = "%s" % [target.display_name]
-	_prompt_label.text = "[%s] %s" % [_get_input_label(), _target.prompt_text]
+	_prompt_label.text = _build_prompt()
 
 	var hold_duration: float = _target.get_hold_duration()
 	var is_hold: bool = hold_duration > 0.0
@@ -66,6 +73,16 @@ func _on_focus_changed(target: Interactable) -> void:
 	_set_progress(0.0)
 
 	_panel.reset_size() # Shrink to the new content
+
+func _build_prompt() -> String:
+	var text: String = "[%s] %s" % [_get_input_label(action_name), _target.prompt_text]
+	var action: SecondaryAction = _target.get_secondary_action()
+	if action != null:
+		var key: String = _get_input_label(secondary_action_name)
+		text += "\n[%s] %s" % [key, action.get_prompt_text()]
+		if action.has_long_action():
+			text += "\n[Hold %s] %s" % [key, action.get_long_prompt_text()]
+	return text
 
 func _on_hold_progress_changed(ratio: float) -> void:
 	_set_progress(ratio)
@@ -86,8 +103,8 @@ func _to_root_screen(camera: Camera3D, viewport_position: Vector2) -> Vector2:
 	var _scale: Vector2 = container.size / Vector2(sub_viewport.size)
 	return container.get_global_rect().position + viewport_position * _scale
 
-func _get_input_label() -> String:
-	var events: Array[InputEvent] = InputMap.action_get_events(action_name)
+func _get_input_label(action: StringName) -> String:
+	var events: Array[InputEvent] = InputMap.action_get_events(action)
 	if events.is_empty():
 		return "?"
 	var event: InputEvent = events[0]

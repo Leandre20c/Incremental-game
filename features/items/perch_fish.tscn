@@ -3,20 +3,32 @@
 [ext_resource type="ArrayMesh" uid="uid://c0x8kanhaongu" path="res://assets/fishes/Perch_Plane.res" id="1_jeswc"]
 [ext_resource type="Script" uid="uid://wsc1s22bnqsu" path="res://components/interactable/pickupable.gd" id="1_lbahm"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lbahm"]
-points = PackedVector3Array(-0.12987672, 0.16659568, -3.7252903e-09, -0.12987672, 0.16659568, -8.021295e-05, -0.28996444, -0.0055910945, -3.7252903e-09, -0.27943382, -0.005622685, 0.015691437, -0.2551238, 0.012736738, 0.023471981, -0.12791623, 0.07871692, 0.036105342, -0.056386486, 0.083551675, 0.039253652, 0.05216846, 0.15916975, -3.7252903e-09, -0.056386486, 0.083551675, -0.039263688, -0.12791623, 0.07871692, -0.03611537, -0.2551238, 0.012736738, -0.023482012, -0.27943382, -0.005622685, -0.015701465, 0.05216846, 0.15916975, -8.021295e-05, -0.27422452, -0.029101267, -0.015701465, -0.2844751, -0.030238852, -3.7252903e-09, -0.27422452, -0.029101267, 0.015691437, -0.25809252, -0.015039399, 0.026540086, -0.12556365, -0.00012433529, 0.045149222, -0.055938378, -0.0006299317, 0.05121524, 0.008477598, 0.071290985, 0.035443597, 0.28188145, 0.070501, -3.7252903e-09, 0.008477598, 0.071290985, -0.035453625, -0.055938378, -0.0006299317, -0.051215246, -0.12556365, -0.00012433529, -0.045159254, -0.25809252, -0.015039399, -0.026550112, 0.28188145, 0.070501, -8.021295e-05, -0.25204304, -0.043068334, -0.023482012, -0.07487106, -0.15619527, -0.03611537, -0.25641212, -0.047966287, -1.00284815e-05, -0.07487106, -0.15619527, 0.036105342, -0.25204304, -0.043068334, 0.023471981, -0.014600128, -0.14857975, 0.036105342, 0.06051451, -0.0043902993, 0.036055207, 0.10101256, 0.00034965575, 0.030650936, 0.28227353, 0.04522124, -3.7252903e-09, -0.014600128, -0.14857975, -0.03611537, 0.10101256, 0.00034965575, -0.030660968, 0.06051451, -0.0043902993, -0.03606524, 0.28227353, 0.04522124, -8.021295e-05, 0.12498653, -0.14026901, -8.021295e-05, 0.12498653, -0.14026901, -1.00284815e-05, 0.28193748, -0.083105154, -1.00284815e-05, 0.28193748, -0.083105154, -8.021295e-05)
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_g61el"]
+bounce = 0.3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_umpw6"]
+radius = 0.09375
+height = 0.52453613
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_umpw6"]
+size = Vector3(0.1463871, 0.43574238, 0.1592102)
 
 [node name="Fish" type="RigidBody3D" unique_id=756224141]
 collision_layer = 4
-collision_mask = 6
-mass = 0.5
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_g61el")
 continuous_cd = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1820621693]
 mesh = ExtResource("1_jeswc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1423182053]
-shape = SubResource("ConvexPolygonShape3D_lbahm")
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_umpw6")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=466358779]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.002068038, 0.0035963063, 0.00016784668)
+shape = SubResource("BoxShape3D_umpw6")
 
 [node name="Pickupable" type="Node3D" parent="." unique_id=1853738886]
 script = ExtResource("1_lbahm")

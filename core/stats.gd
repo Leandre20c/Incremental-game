@@ -14,6 +14,11 @@ func _ready() -> void:
 func get_value(stat: StatDefinition) -> float:
 	return (stat.base_value + _add.get(stat.id, 0.0)) * _multiply.get(stat.id, 1.0)
 
+## Stat value, or `fallback` when no stat is assigned.
+## Lets components keep working without any upgrade wired.
+func get_value_or(stat: StatDefinition, fallback: float) -> float:
+	return fallback if stat == null else get_value(stat)
+	
 ## Value if `upgrade_id` were at `level`. Used for UI previews only.
 func preview(stat: StatDefinition, upgrade_id: StringName, level: int) -> float:
 	var add: float = _add.get(stat.id, 0.0)

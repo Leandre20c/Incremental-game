@@ -5,15 +5,23 @@
 [ext_resource type="PackedScene" uid="uid://drp6girpbyyuf" path="res://ui/world_prompt/WorldPrompt.tscn" id="3_emvbc"]
 [ext_resource type="Script" uid="uid://c6akmqyoo1wvm" path="res://features/player/player_grabber.gd" id="3_i250s"]
 [ext_resource type="Script" uid="uid://vto25m8srrya" path="res://features/player/tool_light.gd" id="5_6xbq4"]
+[ext_resource type="Resource" uid="uid://bwkwwpvwxctw4" path="res://data/stats/player_stats/player_throw_force.tres" id="5_y2cyt"]
+[ext_resource type="Script" uid="uid://m4lnuf2t0fd2" path="res://features/player/player_placer.gd" id="9_k34i2"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1pyse"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1pyse"]
 
-[node name="Player" type="CharacterBody3D" unique_id=1101528458]
+[node name="Player" type="CharacterBody3D" unique_id=1101528458 node_paths=PackedStringArray("grabber")]
 collision_mask = 3
 script = ExtResource("1_sjcu7")
+grabber = NodePath("PlayerGrabber")
+player_id = null
+move_speed = null
 sprint_speed = 15.0
+jump_velocity = null
+mouse_sensitivity = null
+launch_lock_duration = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1465545111]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -48,6 +56,7 @@ screen_offset = Vector2(0, -8)
 script = ExtResource("3_i250s")
 interaction = NodePath("../CameraPivot/Camera3D/InteractionRayCast")
 hold_point = NodePath("../CameraPivot/Camera3D/InteractionRayCast/HoldPoint")
+throw_force_stat = ExtResource("5_y2cyt")
 
 [node name="LighterLight" type="OmniLight3D" parent="." unique_id=104853858]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2586469, 1.1211284, -0.053289056)
@@ -56,3 +65,6 @@ omni_range = 6.6
 script = ExtResource("5_6xbq4")
 flicker_amount = 0.56
 flicker_speed = 32.815
+
+[node name="PlayerPlacer" type="Node3D" parent="." unique_id=641943773]
+script = ExtResource("9_k34i2")
