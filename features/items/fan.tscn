@@ -8,10 +8,12 @@
 [ext_resource type="Script" uid="uid://dy2g8llvglvg2" path="res://components/anchorable/anchorable.gd" id="4_cwrk4"]
 [ext_resource type="Script" uid="uid://b545qdtjf80pb" path="res://components/placed_item/placed_item.gd" id="5_4s583"]
 [ext_resource type="Script" uid="uid://c0k5cxkqdlq3f" path="res://components/wind_zone/wind_zone.gd" id="6_cwrk4"]
-[ext_resource type="Resource" uid="uid://l2xhrgg5drov" path="res://data/stats/machines/fan_power_levels.tres" id="7_chqml"]
+[ext_resource type="Script" uid="uid://cva62mqw5oewj" path="res://components/wind_visual/wind_visual.gd" id="7_312gd"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1pyse"]
-size = Vector3(1, 1, 3)
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_312gd"]
+friction = 3.0
+rough = true
+bounce = 0.08
 
 [sub_resource type="Animation" id="Animation_jmft8"]
 length = 0.001
@@ -64,18 +66,22 @@ radius = 0.32910156
 
 [node name="Fan" type="RigidBody3D" unique_id=1339234563 node_paths=PackedStringArray("animation_player")]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 3
+mass = 4.0
+physics_material_override = SubResource("PhysicsMaterial_312gd")
 script = ExtResource("1_4s583")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="Powerable" type="Node3D" parent="." unique_id=416092140]
 script = ExtResource("2_312gd")
 runs_while_held = true
+runs_when_loose = true
 
 [node name="Pickable" type="Node3D" parent="." unique_id=1517804667]
 script = ExtResource("3_xc8x6")
 display_name = "Fan"
 prompt_text = "Grab"
+outline_grow_from_center = true
 
 [node name="Anchorable" type="Node3D" parent="." unique_id=1825896987]
 script = ExtResource("4_cwrk4")
@@ -85,24 +91,31 @@ script = ExtResource("5_4s583")
 item_id = &"fan"
 
 [node name="WindZone" type="Area3D" parent="." unique_id=1238366696]
-collision_layer = 5
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3241657, 0)
+collision_layer = 0
 collision_mask = 5
+monitorable = false
 script = ExtResource("6_cwrk4")
-force_stat = ExtResource("7_chqml")
+near_size = Vector2(0.8, 0.8)
+far_size = Vector2(4, 4)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WindZone" unique_id=603018650]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0002644062, 1.3170421, 1.5969908)
-shape = SubResource("BoxShape3D_1pyse")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0002644062, 1.3170421, -2.1039736)
+
+[node name="WindVisual" type="GPUParticles3D" parent="WindZone" unique_id=1310164794]
+script = ExtResource("7_312gd")
+streak_size = Vector2(0.02, 0.3)
+streak_color = Color(0.9028119, 0.93613344, 0.99999946, 0.2509804)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=639611938]
 libraries/ = SubResource("AnimationLibrary_cwrk4")
 
 [node name="fan_pales" type="MeshInstance3D" parent="." unique_id=1789967790]
-transform = Transform3D(0.6755903, -6.3164904e-08, -0.73727727, 0.73727727, 1.4355318e-07, 0.6755903, 6.3164904e-08, -1, 1.4355318e-07, -0.0005197662, 1.3193302, 0.07331022)
+transform = Transform3D(0.6755903, -6.3164904e-08, -0.73727727, 0.73727727, 1.4355318e-07, 0.6755903, 6.3164904e-08, -1, 1.4355318e-07, 3.085006e-09, 1.3193302, -0.1874735)
 mesh = ExtResource("1_t2hdp")
 
 [node name="fan_frame" type="MeshInstance3D" parent="." unique_id=1639108006]
-transform = Transform3D(1, -1.3200474e-14, 0, 0, -4.371139e-08, 1, -1.3200473e-14, -1, -4.371139e-08, -1.1641532e-10, 0, -1.2665987e-07)
+transform = Transform3D(-1, -8.742276e-08, -3.821371e-15, 0, -4.371139e-08, 1, -8.742276e-08, 1, 4.371139e-08, -0.0005197694, 0, -0.019367136)
 mesh = ExtResource("2_8416t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1233013146]
@@ -110,11 +123,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.73550415, 0)
 shape = SubResource("CylinderShape3D_yp3gy")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=761129820]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.3276026, 0.064453125)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.3276026, -0.07879344)
 shape = SubResource("CylinderShape3D_1pyse")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="." unique_id=1985192009]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.054260254, 0)
+[node name="BaseCollision" type="CollisionShape3D" parent="." unique_id=1985192009]
+transform = Transform3D(1.2412283, 0, 0, 0, 1, 0, 0, 0, 1.2412283, 0, 0.02042389, 0)
 shape = SubResource("CylinderShape3D_ub5rx")
 
 [connection signal="power_changed" from="Powerable" to="." method="set_power"]
+[connection signal="power_changed" from="Powerable" to="WindZone" method="set_power"]

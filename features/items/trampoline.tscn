@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://wsc1s22bnqsu" path="res://components/interactable/pickupable.gd" id="2_5jp6m"]
 [ext_resource type="Script" uid="uid://dy2g8llvglvg2" path="res://components/anchorable/anchorable.gd" id="4_ob8ha"]
 [ext_resource type="Script" uid="uid://b545qdtjf80pb" path="res://components/placed_item/placed_item.gd" id="5_ob8ha"]
-[ext_resource type="Script" uid="uid://4gl5mp5jwehb" path="res://components/powerable/powerable.gd" id="6_ls2am"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_1pyse"]
 height = 0.37866795
@@ -22,7 +21,7 @@ mass = 7.0
 
 [node name="BounceZone" type="Area3D" parent="." unique_id=1056486243]
 transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
-collision_layer = 2
+collision_layer = 0
 collision_mask = 5
 script = ExtResource("1_sbr81")
 
@@ -50,8 +49,5 @@ script = ExtResource("4_ob8ha")
 [node name="PlacedItem" type="Node3D" parent="." unique_id=1089808361]
 script = ExtResource("5_ob8ha")
 item_id = &"trampoline"
-
-[node name="Powerable" type="Node3D" parent="." unique_id=1034072235]
-script = ExtResource("6_ls2am")
 
 [connection signal="anchor_changed" from="Anchorable" to="BounceZone" method="set_enabled"]

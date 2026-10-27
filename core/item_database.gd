@@ -27,3 +27,15 @@ func _register(definition: ItemDefinition, path: String) -> void:
 		push_warning("ItemDatabase: duplicate id '%s' at %s" % [definition.id, path])
 		return
 	_definitions[definition.id] = definition
+
+## Items listed in the buy menu, cheapest first (same order on every peer).
+func get_buyable() -> Array[ItemDefinition]:
+	var result: Array[ItemDefinition] = []
+	for definition in _definitions.values():
+		if definition.buyable:
+			result.append(definition)
+	result.sort_custom(func(a: ItemDefinition, b: ItemDefinition) -> bool:
+		if a.buy_cost != b.buy_cost:
+			return a.buy_cost < b.buy_cost
+		return String(a.id) < String(b.id))
+	return result

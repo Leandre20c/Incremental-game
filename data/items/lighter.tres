@@ -7,6 +7,7 @@
 script = ExtResource("1_7wnou")
 id = &"lighter"
 display_name = "Lighter"
+description = "Someone left it on the desk. It still lights up the dark."
 world_scene = ExtResource("2_qw11f")
 grants_tool = &"lighter"
 metadata/_custom_type_script = "uid://6mjbdc34rao3"

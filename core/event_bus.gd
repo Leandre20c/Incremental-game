@@ -21,6 +21,7 @@ signal items_released(player_id: int, entity_ids: Array)
 signal tool_granted(player_id: int, tool_id: StringName)
 signal tool_toggled(player_id: int, tool_id: StringName, active: bool)
 signal item_sold(player_id: int, item_id: StringName, value: int)
+signal item_bought(player_id: int, item_id: StringName, entity_id: int)
 signal item_power_changed(entity_id: int)
 
 # Upgrades and money

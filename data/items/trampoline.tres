@@ -1,12 +1,17 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://binaeg7bpm008"]
 
 [ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_j140j"]
+[ext_resource type="Texture2D" uid="uid://benicuxds4fym" path="res://assets/machines_pictures/low_poly_trampoline.png" id="2_2jbp3"]
 [ext_resource type="PackedScene" uid="uid://c0jwo3m6kd3sl" path="res://features/items/trampoline.tscn" id="2_7h6wu"]
 
 [resource]
 script = ExtResource("1_j140j")
 id = &"trampoline"
 display_name = "Trampoline"
+description = "Bounces whatever lands on it, along its surface."
+icon = ExtResource("2_2jbp3")
 world_scene = ExtResource("2_7h6wu")
 placeable = true
+buyable = true
+buy_cost = 500
 metadata/_custom_type_script = "uid://6mjbdc34rao3"

@@ -32,30 +32,19 @@ const OUTLINE_SHADER: Shader = preload("res://components/outline/outline.gdshade
 @export var outline_grow_from_center: bool = false
 
 var _body: CollisionObject3D
-var _meshes: Array[MeshInstance3D] = []
-var _outline_material: ShaderMaterial
+var _outline_materials: Dictionary[MeshInstance3D, ShaderMaterial] = {} ## One per mesh: cut-out meshes need their own texture
 var _secondary: SecondaryAction
 
 func _ready() -> void:
 	_body = get_parent() as CollisionObject3D
 	assert(_body != null, "Interactable must be a child of a CollisionObject3D")
 	_body.set_meta(META_KEY, self)
-	
 	_secondary = SecondaryAction.find_on(_body)
 
 	for node in _body.find_children("*", "MeshInstance3D", true, false):
-		_meshes.append(node as MeshInstance3D)
-
-	_outline_material = ShaderMaterial.new()
-	_outline_material.shader = OUTLINE_SHADER
-	_outline_material.set_shader_parameter("outline_color", outline_color)
-	_outline_material.set_shader_parameter("outline_width", outline_width)
-	_outline_material.set_shader_parameter("grow_from_center", outline_grow_from_center)
-
-	for child in _body.get_children():
-		if child is SecondaryAction:
-			_secondary = child
-			break
+		var mesh: MeshInstance3D = node as MeshInstance3D
+		if mesh.mesh != null:
+			_outline_materials[mesh] = _make_outline_material(mesh)
 
 static func find_on(collider: Object) -> Interactable:
 	if not is_instance_valid(collider) or not collider.has_meta(META_KEY):
@@ -91,10 +80,30 @@ func get_prompt_position() -> Vector3:
 	return _body.global_position + prompt_offset
 
 func _set_outline(visible_outline: bool) -> void:
-	var material: Material = _outline_material if visible_outline and outline_enabled else null
-	for mesh in _meshes:
+	var show: bool = visible_outline and outline_enabled
+	for mesh in _outline_materials:
 		if is_instance_valid(mesh):
-			mesh.material_overlay = material
+			mesh.material_overlay = _outline_materials[mesh] if show else null
+
+## Outline material for one mesh. Copies the cut-out texture of alpha-scissor materials (grilles…).
+func _make_outline_material(mesh: MeshInstance3D) -> ShaderMaterial:
+	var material: ShaderMaterial = ShaderMaterial.new()
+	material.shader = OUTLINE_SHADER
+	material.set_shader_parameter("outline_color", outline_color)
+	material.set_shader_parameter("outline_width", outline_width)
+	material.set_shader_parameter("grow_from_center", outline_grow_from_center)
+
+	var source: BaseMaterial3D = mesh.get_active_material(0) as BaseMaterial3D
+	var cut_out: bool = source != null and source.albedo_texture != null and source.transparency in [
+		BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR, BaseMaterial3D.TRANSPARENCY_ALPHA_HASH,
+	]
+	if cut_out:
+		material.set_shader_parameter("use_alpha_texture", true)
+		material.set_shader_parameter("alpha_texture", source.albedo_texture)
+		material.set_shader_parameter("alpha_threshold", source.alpha_scissor_threshold)
+		material.set_shader_parameter("uv_scale", source.uv1_scale)
+		material.set_shader_parameter("uv_offset", source.uv1_offset)
+	return material
 
 ## Effective hold time. Override to apply upgrades. Read this instead of hold_duration.
 func get_hold_duration() -> float:

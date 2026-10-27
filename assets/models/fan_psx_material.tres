@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cdta3yay12k66"]
+
+[ext_resource type="Texture2D" uid="uid://5othrpofnyud" path="res://assets/models/fan_psx_0.png" id="1_n1tfr"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.16
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 2
+albedo_texture = ExtResource("1_n1tfr")
+texture_filter = 0

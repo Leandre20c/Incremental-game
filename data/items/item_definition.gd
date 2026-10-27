@@ -4,6 +4,8 @@ extends Resource
 
 @export var id: StringName = &""
 @export var display_name: String = ""
+@export_multiline() var description: String = "description"
+@export var icon: Texture2D
 @export var world_scene: PackedScene
 @export var sellable: bool = false:
 	set(value):
@@ -22,11 +24,24 @@ extends Resource
 @export_group("Power")
 @export_range(0, 10) var max_power_levels: int = 0 ## 0 = no power settings. Levels shown in the machine menu
 @export var unlocked_power_levels_stat: StatDefinition ## Upgradable number of usable levels. Empty = all of them
+@export var starts_powered: bool = true ## Switched on when it appears in the world (bought, spawned, placed in the level)
+
+@export_group("Shop")
+@export var buyable: bool = false: ## Listed in the buy menu
+	set(value):
+		buyable = value
+		notify_property_list_changed()
+@export var buy_cost: int = 50
+@export var buy_cost_resource_id: StringName = &"money"
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "sell_value_stat" and not sellable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 	if property.name in ["max_tilt_degrees", "max_power_levels", "unlocked_power_levels_stat"] and not placeable:
+		property.usage &= ~PROPERTY_USAGE_EDITOR
+	if property.name in ["buy_cost", "buy_cost_resource_id"] and not buyable:
+		property.usage &= ~PROPERTY_USAGE_EDITOR
+	if property.name in ["max_tilt_degrees", "max_power_levels", "unlocked_power_levels_stat", "starts_powered"] and not placeable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 
 func can_be_sold() -> bool:

@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://dkvnep0h154nj"]
+
+[ext_resource type="Script" uid="uid://cu3olxp87hy2f" path="res://ui/buy_machines_menu/buy_machine_menu.gd" id="1_daqy6"]
+[ext_resource type="PackedScene" uid="uid://d5hhc5uc5ppv" path="res://ui/buy_machines_menu/item_slot.tscn" id="3_kbe31"]
+[ext_resource type="FontFile" uid="uid://cvpi0m8otwxqq" path="res://assets/fonts/MGS1 Codec.ttf" id="4_d8wou"]
+
+[node name="BuyMachinesMenu" type="CanvasLayer" unique_id=1018229546]
+script = ExtResource("1_daqy6")
+
+[node name="Root" type="Control" parent="." unique_id=1835252678]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Root" unique_id=2109518597]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="CenterContainer" type="CenterContainer" parent="Root/MarginContainer" unique_id=2052585648]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer" unique_id=1685926217]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=336475852]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "close"
+
+[node name="PanelMenu" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=510781393]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu" unique_id=431338482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer" unique_id=220295591]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer" unique_id=875082218]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_d8wou")
+theme_override_font_sizes/font_size = 48
+text = "order machines"
+
+[node name="PanelContainer" type="Container" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer" unique_id=77840472]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer" unique_id=641795967]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 3
+
+[node name="ItemSlot" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=1532858513 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot2" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=65225531 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot3" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=23381632 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot4" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=543223616 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot5" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=851065960 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot6" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=236134976 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot7" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=1733163743 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot8" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=1352440180 instance=ExtResource("3_kbe31")]
+layout_mode = 2
+
+[node name="ItemSlot9" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer/Grid" unique_id=2124456034 instance=ExtResource("3_kbe31")]
+layout_mode = 2

@@ -10,6 +10,7 @@ signal power_changed(power: float)
 
 @export var level_step: float = 0.5 ## Extra power per level above 1 (0.5 = +50%)
 @export var runs_while_held: bool = false ## Also runs in the player's hands (e.g. a fan used as a blower)
+@export var runs_when_loose: bool = false ## Also runs lying free (not placed, not held), e.g. a fan dropped on the floor
 @export var turn_on_text: String = "Turn on"
 @export var turn_off_text: String = "Turn off"
 @export var settings_text: String = "Settings"
@@ -76,13 +77,21 @@ func _on_items_released(_player_id: int, entity_ids: Array) -> void:
 func _refresh() -> void:
 	var entity_id: int = _get_entity_id()
 	var item: Dictionary = GameState.get_world_item(entity_id)
-	var running: bool = not item.is_empty() and (item["anchored"] or (runs_while_held and item["holder"] != 0))
+	var running: bool = not item.is_empty() and _is_running_state(item)
 	var level: int = GameState.get_effective_power_level(entity_id) if running else 0
 	var power: float = 0.0 if level <= 0 else 1.0 + (level - 1) * level_step
 	if is_equal_approx(power, _power):
 		return
 	_power = power
 	power_changed.emit(power)
+
+## Whether the machine may run in its current state: placed, held or lying free.
+func _is_running_state(item: Dictionary) -> bool:
+	if item["anchored"]:
+		return true
+	if item["holder"] != 0:
+		return runs_while_held
+	return runs_when_loose
 
 func _get_entity_id() -> int:
 	return _body.get_meta(&"entity_id", -1)

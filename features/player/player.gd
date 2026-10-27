@@ -10,11 +10,17 @@ extends CharacterBody3D
 @export var mouse_sensitivity: float = 0.002
 @export var launch_recovery_time: float = 0.8 ## Seconds to smoothly get full movement control back after a launch
 
+@export_group("World pushes")
+@export var push_mass: float = 3.0 ## How heavy the player feels to pushes (wind…). Higher = pushed less
+@export var push_damping: float = 3.0 ## How fast a push fades once it stops (1/s)
+
 @onready var camera_pivot: Node3D = $CameraPivot
 
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var _since_launch: float = INF ## Seconds since the last launch. INF = full control
+var _push_velocity: Vector3 = Vector3.ZERO ## Horizontal velocity given by the world (wind…), fades out
+var _applied_push: Vector3 = Vector3.ZERO ## Part of `velocity` that came from _push_velocity last frame
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -26,6 +32,12 @@ func launch(launch_velocity: Vector3) -> void:
 	velocity = launch_velocity
 	_since_launch = 0.0
 
+## Continuous push from the world (wind…), called every physics frame while it lasts.
+## Added on top of the player's own movement, so walking still works against or with it.
+func push(acceleration: Vector3, delta: float) -> void:
+	_push_velocity += Vector3(acceleration.x, 0.0, acceleration.z) * delta
+	velocity.y += acceleration.y * delta # Vertical: like gravity, it builds up on its own
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sensitivity)
@@ -33,6 +45,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, deg_to_rad(-89.0), deg_to_rad(89.0))
 
 func _physics_process(delta: float) -> void:
+	# Work on the player's own velocity: the push is added back right before moving
+	velocity -= _applied_push
+	_applied_push = Vector3.ZERO
+	_push_velocity = _push_velocity.lerp(Vector3.ZERO, clampf(push_damping * delta, 0.0, 1.0))
+
 	_since_launch += delta
 
 	if not is_on_floor():
@@ -69,6 +86,8 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, current_speed)
 		velocity.z = move_toward(velocity.z, 0.0, current_speed)
 
+	_applied_push = _push_velocity
+	velocity += _applied_push
 	move_and_slide()
 
 ## 0 right after a launch, eases up to 1 (full control) over launch_recovery_time.
@@ -84,4 +103,6 @@ func _on_player_respawned(target_player_id: int, target_position: Vector3) -> vo
 	global_position = target_position
 	velocity = Vector3.ZERO
 	_since_launch = INF
+	_push_velocity = Vector3.ZERO
+	_applied_push = Vector3.ZERO
 	reset_physics_interpolation()

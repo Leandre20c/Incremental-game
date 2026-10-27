@@ -6,30 +6,62 @@
 script = ExtResource("1_ju4ui")
 
 [node name="Root" type="Control" parent="." unique_id=262414500]
+unique_name_in_owner = true
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="Root" unique_id=1721227324]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="MarginContainer" type="MarginContainer" parent="Root" unique_id=1842435447]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="MarginContainer" type="MarginContainer" parent="Root/CenterContainer" unique_id=1842435447]
+[node name="CenterContainer" type="CenterContainer" parent="Root/MarginContainer" unique_id=1721227324]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Root/CenterContainer/MarginContainer" unique_id=133736813]
+[node name="Panel" type="Panel" parent="Root/MarginContainer/CenterContainer" unique_id=1940416337]
+custom_minimum_size = Vector2(500, 300)
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="Root/CenterContainer/MarginContainer/VBoxContainer" unique_id=1915757789]
+[node name="MarginContainer" type="MarginContainer" parent="Root/MarginContainer/CenterContainer/Panel" unique_id=1475879586]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/Panel/MarginContainer" unique_id=133736813]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Root/MarginContainer/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1915757789]
 unique_name_in_owner = true
 layout_mode = 2
+text = "Title"
 
-[node name="Levels" type="HBoxContainer" parent="Root/CenterContainer/MarginContainer/VBoxContainer" unique_id=1407263257]
+[node name="Levels" type="HBoxContainer" parent="Root/MarginContainer/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1407263257]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_vertical = 6
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="Root/MarginContainer/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=18573738]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="CloseButton" type="Button" parent="Root/CenterContainer/MarginContainer/VBoxContainer" unique_id=18573738]
-unique_name_in_owner = true
-layout_mode = 2
+size_flags_vertical = 10
+text = "Close"

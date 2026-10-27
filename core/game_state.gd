@@ -19,7 +19,7 @@ func _ready() -> void:
 	CommandService.process_queue()
 	print("No money: ", GameState.get_upgrade_level(&"faster_fishing")) # 0
 
-	GameState.add_resource(&"money", 10000)
+	GameState.add_resource(&"money", 10000000)
 	
 #region Resources
 
@@ -75,13 +75,15 @@ func get_world_item_count() -> int:
 
 ## Every world item entry has the same keys, whatever created it.
 func _new_world_item(item_id: StringName, position: Vector3) -> Dictionary:
+	var definition: ItemDefinition = ItemDatabase.get_definition(item_id)
+	var starts_powered: bool = definition.starts_powered if definition != null else true
 	return {
 		"item_id": item_id,
 		"position": position,
 		"rotation": Quaternion.IDENTITY,
 		"holder": 0,
 		"anchored": false,
-		"powered": true,
+		"powered": starts_powered,
 		"power_level": 1,
 	}
 

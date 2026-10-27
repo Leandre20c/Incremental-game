@@ -1,12 +1,16 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://lg8yb4suflge"]
 
 [ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_tb5p2"]
+[ext_resource type="Texture2D" uid="uid://dhbl6y4topl35" path="res://assets/machines_pictures/little_crate.png" id="2_gg4va"]
 [ext_resource type="PackedScene" uid="uid://bw2ip30a0owpv" path="res://features/items/little_box.tscn" id="2_oka5w"]
 
 [resource]
 script = ExtResource("1_tb5p2")
 id = &"little_crate"
 display_name = "Little crate"
+description = "An empty supply crate. Heavy enough to carry products."
+icon = ExtResource("2_gg4va")
 world_scene = ExtResource("2_oka5w")
-sell_value = -1
+buyable = true
+buy_cost = 100
 metadata/_custom_type_script = "uid://6mjbdc34rao3"
