@@ -39,6 +39,7 @@ extends Resource
 		notify_property_list_changed()
 @export var buy_cost: int = 50
 @export var buy_cost_resource_id: StringName = &"money"
+@export var shop_category: ShopCategory ## Tab of the buy menu. Empty = "Other" tab
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "sell_value_stat" and not sellable:
@@ -47,13 +48,19 @@ func _validate_property(property: Dictionary) -> void:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 	if property.name == "grid_thickness" and not (placeable and snaps_to_grid):
 		property.usage &= ~PROPERTY_USAGE_EDITOR
-	if property.name in ["buy_cost", "buy_cost_resource_id"] and not buyable:
+	if property.name in ["buy_cost", "buy_cost_resource_id", "shop_category"] and not buyable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 	if property.name in ["max_power_levels", "unlocked_power_levels_stat", "starts_powered"] and not placeable:
 		property.usage &= ~PROPERTY_USAGE_EDITOR
 
 func can_be_sold() -> bool:
 	return sellable and sell_value_stat != null and sell_value_stat.base_value > 0
+
+func get_sell_value() -> float:
+	if !can_be_sold():
+		return -1
+	
+	return sell_value_stat.base_value
 
 func has_power_settings() -> bool:
 	return max_power_levels > 0

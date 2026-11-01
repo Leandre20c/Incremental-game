@@ -40,3 +40,6 @@ func _on_buy_pressed() -> void:
 func _on_resource_changed(resource_id: StringName, _amount: int) -> void:
 	if _definition != null and resource_id == _definition.buy_cost_resource_id:
 		_refresh()
+
+func get_definition() -> ItemDefinition:
+	return _definition

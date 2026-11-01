@@ -45,7 +45,7 @@ func _fade_to(alpha: float) -> void:
 
 func _build_text():
 	tool_display_name.text = _tool_name
-	tool_hint.text =  "— [%s] %s —" % [_get_input_label("toggle_lighter"), "to toggle lighter"]
+	tool_hint.text = "— [%s] to toggle light —" % _get_input_label("toggle_light")
 
 func _get_input_label(action_name) -> String:
 	var events: Array[InputEvent] = InputMap.action_get_events(action_name)

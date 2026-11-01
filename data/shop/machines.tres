@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ShopCategory" format=3 uid="uid://cpx4wrjr35twh"]
+
+[ext_resource type="Script" uid="uid://cscwi04ha6oh7" path="res://data/shop/shop_category.gd" id="1_elhwo"]
+
+[resource]
+script = ExtResource("1_elhwo")
+display_name = "Machines"
+title = "Order machines"
+order = 2
+metadata/_custom_type_script = "uid://cscwi04ha6oh7"

@@ -6,10 +6,13 @@ extends Interactable
 @export var spawn_point: Marker3D
 @export var speed_stat_id: StringName = &""
 @export var duration_stat: StatDefinition
+@export var launch: SpawnLaunch ## Empty = default spawner hop
 
 func create_command(player_id: int) -> Command:
 	var _position: Vector3 = spawn_point.global_position if spawn_point else get_prompt_position()
-	return HarvestCommand.new(player_id, item_id, amount, _position)
+	var origin: Node3D = spawn_point if spawn_point else self
+	var velocity: Vector3 = launch.sample(origin.global_basis) if launch else Vector3.ZERO
+	return HarvestCommand.new(player_id, item_id, amount, _position, velocity)
 
 func get_hold_duration() -> float:
 	if duration_stat == null:

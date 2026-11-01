@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://d03boyc737fiu"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_b6870"]
+[ext_resource type="Resource" uid="uid://cppd258bnqans" path="res://data/stats/oil_barrel/oil_barrel_fishing_speed.tres" id="2_ad4yd"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="2_d52we"]
+
+[sub_resource type="Resource" id="Resource_wqnaj"]
+script = ExtResource("1_b6870")
+operation = 1
+value_per_level = 0.5
+metadata/_custom_type_script = "uid://camjjo7x1u5qc"
+
+[resource]
+script = ExtResource("2_d52we")
+id = &"oil_barrel_fishing"
+display_name = "Faster fishing"
+description = "Decrease the spot fishing speed"
+max_level = 5
+preview_stat = ExtResource("2_ad4yd")
+effects = Array[ExtResource("1_b6870")]([SubResource("Resource_wqnaj")])
+metadata/_custom_type_script = "uid://87c8872je4ed"

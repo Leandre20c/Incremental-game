@@ -1,11 +1,10 @@
 class_name ToolLight
 extends Light3D
 
-## Shows a light while the given tool is active. Also handles its toggle input.
+## Shows a light while the given tool is active.
 
 @export var player_id: int = 1
 @export var tool_id: StringName = &"lighter"
-@export var toggle_action: StringName = &"toggle_lighter"
 
 @export_group("Flicker")
 @export var flicker_amount: float = 0.15 ## 0 = steady light
@@ -19,10 +18,6 @@ func _ready() -> void:
 	_base_energy = light_energy
 	visible = GameState.is_tool_active(player_id, tool_id)
 	EventBus.tool_toggled.connect(_on_tool_toggled)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(toggle_action):
-		CommandService.dispatch(ToggleToolCommand.new(player_id, tool_id))
 
 func _process(delta: float) -> void:
 	if not visible or flicker_amount <= 0.0:

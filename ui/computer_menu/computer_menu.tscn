@@ -13,6 +13,8 @@
 [ext_resource type="Resource" uid="uid://b20u2ugf8aw0c" path="res://data/upgrades/player/player_throw_force_upgrade.tres" id="8_ve6n6"]
 [ext_resource type="Resource" uid="uid://ctyjnqdbhc8m" path="res://data/upgrades/barracuda_fish/barracuda_increase_value.tres" id="9_xy8g1"]
 [ext_resource type="Resource" uid="uid://gaw1d25ntqff" path="res://data/upgrades/machines/fan_gears_upgrade.tres" id="13_2jda8"]
+[ext_resource type="Resource" uid="uid://d03boyc737fiu" path="res://data/upgrades/oil_barrel/oil_barrel_fishing_speed.tres" id="13_kj3xq"]
+[ext_resource type="Resource" uid="uid://cjtngkm0nruwp" path="res://data/upgrades/oil_barrel/oil_barrel_increase_value.tres" id="14_dchee"]
 
 [node name="ComputerMenu" type="CanvasLayer" unique_id=1018229546]
 script = ExtResource("1_qjt67")
@@ -56,7 +58,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_00m6n")
-pages = [NodePath("../../PlayerUpgradesMenu"), NodePath("../../PerchUpgradesMenu"), NodePath("../../BarracudaUpgradesMenu"), NodePath("../../MachineUpgradesMenu")]
+pages = [NodePath("../../PlayerUpgradesMenu"), NodePath("../../PerchUpgradesMenu"), NodePath("../../BarracudaUpgradesMenu"), NodePath("../../OilBarrelUpgradesMenu"), NodePath("../../MachineUpgradesMenu")]
 
 [node name="PlayerUpgradeButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs/MenuTabs" unique_id=1162449933]
 layout_mode = 2
@@ -75,6 +77,13 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_qiyo2")
 theme_override_font_sizes/font_size = 32
 text = "barracudas
+"
+
+[node name="OilUpgradeButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs/MenuTabs" unique_id=804625393]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_qiyo2")
+theme_override_font_sizes/font_size = 32
+text = "oil barrels
 "
 
 [node name="MachinesUpgradeButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/AllTabs/MenuTabs" unique_id=2133332404]
@@ -226,6 +235,50 @@ upgrade = ExtResource("8_8quc6")
 [node name="FishingSpotValueUpgrade" parent="Root/MarginContainer/CenterContainer/VBoxContainer/BarracudaUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=461508971 instance=ExtResource("3_3tyn7")]
 layout_mode = 2
 upgrade = ExtResource("9_xy8g1")
+
+[node name="OilBarrelUpgradesMenu" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=1957067987]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu" unique_id=5884371]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu/MarginContainer" unique_id=764537710]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu/MarginContainer/VBoxContainer" unique_id=1529619848]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_5jset")
+theme_override_font_sizes/font_size = 48
+text = "oil upgrades"
+
+[node name="PanelContainer" type="Container" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu/MarginContainer/VBoxContainer" unique_id=1535619739]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu/MarginContainer/VBoxContainer" unique_id=2024348235]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=303361050]
+layout_mode = 2
+
+[node name="FishingSpotSpeedUpgrade" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=825826724 instance=ExtResource("3_3tyn7")]
+layout_mode = 2
+upgrade = ExtResource("13_kj3xq")
+
+[node name="FishingSpotValueUpgrade" parent="Root/MarginContainer/CenterContainer/VBoxContainer/OilBarrelUpgradesMenu/MarginContainer/VBoxContainer/VBoxContainer" unique_id=2045846665 instance=ExtResource("3_3tyn7")]
+layout_mode = 2
+upgrade = ExtResource("14_dchee")
 
 [node name="MachineUpgradesMenu" type="Panel" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=94711573]
 custom_minimum_size = Vector2(0, 400)

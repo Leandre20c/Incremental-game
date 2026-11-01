@@ -15,6 +15,12 @@ func create_command(player_id: int) -> Command:
 func _get_entity_id() -> int:
 	return _body.get_meta(&"entity_id", -1)
 
+func get_prompt_details() -> String:
+	var definition: ItemDefinition = get_item_definition()
+	if definition == null or not definition.can_be_sold():
+		return ""
+	return "%d $" % definition.get_sell_value()
+
 func _on_item_grabbed(_player_id: int, entity_id: int) -> void:
 	if entity_id == _get_entity_id():
 		enabled = false

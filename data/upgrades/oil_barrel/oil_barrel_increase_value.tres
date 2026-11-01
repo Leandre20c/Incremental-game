@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" format=3 uid="uid://cjtngkm0nruwp"]
+
+[ext_resource type="Script" uid="uid://camjjo7x1u5qc" path="res://data/upgrades/upgrade_effect.gd" id="1_bodh4"]
+[ext_resource type="Script" uid="uid://87c8872je4ed" path="res://data/upgrades/upgrade_definition.gd" id="2_n4irb"]
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="2_wqnaj"]
+[ext_resource type="Resource" uid="uid://c2ihmv2wyhrds" path="res://data/stats/oil_barrel/oil_barrel_price.tres" id="3_3dj3c"]
+
+[sub_resource type="Resource" id="Resource_n4irb"]
+script = ExtResource("2_wqnaj")
+metadata/_custom_type_script = "uid://djllv0njt17nk"
+
+[sub_resource type="Resource" id="Resource_bodh4"]
+script = ExtResource("1_bodh4")
+stat = SubResource("Resource_n4irb")
+operation = 1
+value_per_level = 1.5
+metadata/_custom_type_script = "uid://camjjo7x1u5qc"
+
+[resource]
+script = ExtResource("2_n4irb")
+id = &"oil_barrel_money_value"
+display_name = "Increase value"
+description = "Increase the oil barrel's value"
+base_cost = 500000
+cost_growth = 3.0
+max_level = 10
+preview_stat = ExtResource("3_3dj3c")
+effects = Array[ExtResource("1_bodh4")]([SubResource("Resource_bodh4")])
+metadata/_custom_type_script = "uid://87c8872je4ed"

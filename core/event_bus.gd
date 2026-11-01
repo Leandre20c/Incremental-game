@@ -4,8 +4,7 @@ extends Node
 
 signal resource_changed(resource_id: StringName, new_amount: int)
 signal harvested(player_id: int, item_id: StringName, amount: int)
-signal world_item_spawned(entity_id: int, item_id: StringName, position: Vector3)
-signal world_item_removed(entity_id: int)
+
 
 # Local UI requests (not simulation events)
 signal menu_requested(player_id: int, menu_id: StringName)
@@ -16,6 +15,8 @@ signal player_respawned(player_id: int, position: Vector3)
 signal player_message(player_id: int, text: String)
 
 # items
+signal world_item_spawned(entity_id: int, item_id: StringName, position: Vector3, launch_velocity: Vector3)
+signal world_item_removed(entity_id: int)
 signal item_grabbed(player_id: int, entity_id: int)
 signal items_released(player_id: int, entity_ids: Array)
 signal tool_granted(player_id: int, tool_id: StringName)

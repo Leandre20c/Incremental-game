@@ -4,20 +4,22 @@ extends Command
 var item_id: StringName = &""
 var amount: int = 1
 var spawn_position: Vector3 = Vector3.ZERO
+var launch_velocity: Vector3 = Vector3.ZERO
 
 func _init(p_player_id: int = 1, p_item_id: StringName = &"", p_amount: int = 1,
-		p_spawn_position: Vector3 = Vector3.ZERO) -> void:
+		p_spawn_position: Vector3 = Vector3.ZERO, p_launch_velocity: Vector3 = Vector3.ZERO) -> void:
 	super(p_player_id)
 	item_id = p_item_id
 	amount = p_amount
 	spawn_position = p_spawn_position
+	launch_velocity = p_launch_velocity
 
 func execute() -> bool:
 	if amount <= 0 or ItemDatabase.get_definition(item_id) == null:
 		push_warning(item_id, " not found")
 		return false
 	for i in amount:
-		GameState.spawn_world_item(item_id, spawn_position)
+		GameState.spawn_world_item(item_id, spawn_position, launch_velocity)
 	EventBus.harvested.emit(player_id, item_id, amount)
 	return true
 
@@ -27,15 +29,18 @@ func to_dict() -> Dictionary:
 	data["item_id"] = item_id
 	data["amount"] = amount
 	data["spawn_position"] = [spawn_position.x, spawn_position.y, spawn_position.z]
+	data["launch_velocity"] = [launch_velocity.x, launch_velocity.y, launch_velocity.z]
 	return data
 
 static func from_dict(data: Dictionary) -> HarvestCommand:
 	var p: Array = data.get("spawn_position", [0.0, 0.0, 0.0])
+	var v: Array = data.get("launch_velocity", [0.0, 0.0, 0.0])
 	var cmd: HarvestCommand = HarvestCommand.new(
 		data.get("player_id", 1),
 		StringName(data.get("item_id", "")),
 		data.get("amount", 1),
-		Vector3(p[0], p[1], p[2])
+		Vector3(p[0], p[1], p[2]),
+		Vector3(v[0], v[1], v[2])
 	)
 	cmd.timestamp = data.get("timestamp", 0)
 	return cmd

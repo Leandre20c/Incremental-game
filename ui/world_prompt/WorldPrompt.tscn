@@ -14,8 +14,6 @@ bg_color = Color(0.72622836, 0.42815644, 0, 1)
 
 [node name="WorldPrompt" type="CanvasLayer" unique_id=2111124098]
 script = ExtResource("1_oejbh")
-action_name = null
-screen_offset = null
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=382005494]
 unique_name_in_owner = true
@@ -40,6 +38,13 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_w4oyy")
 theme_override_font_sizes/font_size = 24
 text = "Display Name"
+horizontal_alignment = 1
+
+[node name="DetailLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=494381929]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42745098, 0.73333335, 0.3254902, 1)
+text = "---$"
 horizontal_alignment = 1
 
 [node name="PromptLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=673417518]

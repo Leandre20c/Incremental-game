@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bm3m1r6q7d750"]
+
+[ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_5egnk"]
+[ext_resource type="Resource" uid="uid://c2ihmv2wyhrds" path="res://data/stats/oil_barrel/oil_barrel_price.tres" id="2_tpn8m"]
+[ext_resource type="PackedScene" uid="uid://ddatu7bkwksgc" path="res://features/items/oil_barrel.tscn" id="3_tpn8m"]
+
+[resource]
+script = ExtResource("1_5egnk")
+id = &"oil_barrel"
+display_name = "Oil barrel"
+description = "Contains a huge amount of precious resources. Sellable for high value. But take care of it, it can sink."
+world_scene = ExtResource("3_tpn8m")
+sellable = true
+sell_value_stat = ExtResource("2_tpn8m")
+metadata/_custom_type_script = "uid://6mjbdc34rao3"

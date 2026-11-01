@@ -8,6 +8,8 @@
 script = ExtResource("1_omm37")
 id = &"perch_fish"
 display_name = "Perch"
+description = "Can be sold for a little amount of money.
+This product has normal characteristics"
 world_scene = ExtResource("3_mm6q7")
 sellable = true
 sell_value_stat = ExtResource("2_tapep")

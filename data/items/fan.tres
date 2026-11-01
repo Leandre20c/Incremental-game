@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dpvpu3w8yy2ag" path="res://assets/machines_pictures/fan_psx.png" id="2_4b17d"]
 [ext_resource type="Resource" uid="uid://l2xhrgg5drov" path="res://data/stats/machines/fan_power_levels.tres" id="2_mu3eq"]
 [ext_resource type="PackedScene" uid="uid://n2hdywmwkag" path="res://features/items/fan.tscn" id="2_r4cpv"]
+[ext_resource type="Resource" uid="uid://cpx4wrjr35twh" path="res://data/shop/machines.tres" id="3_rn1cy"]
 
 [resource]
 script = ExtResource("1_r4cpv")
@@ -13,10 +14,10 @@ description = "Blows loose items away in front of it."
 icon = ExtResource("2_4b17d")
 world_scene = ExtResource("2_r4cpv")
 placeable = true
-snaps_to_grid = true
 max_power_levels = 3
 unlocked_power_levels_stat = ExtResource("2_mu3eq")
 starts_powered = false
 buyable = true
 buy_cost = 10000
+shop_category = ExtResource("3_rn1cy")
 metadata/_custom_type_script = "uid://6mjbdc34rao3"

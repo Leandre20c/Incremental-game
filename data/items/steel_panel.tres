@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_2eluu"]
 [ext_resource type="Texture2D" uid="uid://dpo5m1fdqj7k8" path="res://assets/machines_pictures/steel_panel.png" id="1_u8hrw"]
+[ext_resource type="Resource" uid="uid://hi31h1l3nsx4" path="res://data/shop/panels.tres" id="3_8jxll"]
 [ext_resource type="PackedScene" uid="uid://cp0v5a60i1kr2" path="res://features/items/steel_panel.tscn" id="3_lv122"]
 
 [resource]
@@ -15,4 +16,5 @@ placeable = true
 snaps_to_grid = true
 buyable = true
 buy_cost = 25
+shop_category = ExtResource("3_8jxll")
 metadata/_custom_type_script = "uid://6mjbdc34rao3"

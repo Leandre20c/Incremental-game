@@ -39,10 +39,14 @@ size_flags_vertical = 4
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 
-[node name="CloseButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=336475852]
+[node name="Tabs" type="HBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer" unique_id=32575208]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 8
+
+[node name="CloseButton" type="Button" parent="Root/MarginContainer/CenterContainer/VBoxContainer/Tabs" unique_id=336475852]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
 size_flags_vertical = 0
 text = "close"
 
@@ -65,13 +69,14 @@ theme_override_constants/margin_bottom = 16
 [node name="VBoxContainer" type="VBoxContainer" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer" unique_id=220295591]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer" unique_id=875082218]
+[node name="TitleLabel" type="Label" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer" unique_id=875082218]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_d8wou")
 theme_override_font_sizes/font_size = 48
 text = "order machines"
 
-[node name="PanelContainer" type="Container" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer" unique_id=77840472]
+[node name="Spacer" type="Container" parent="Root/MarginContainer/CenterContainer/VBoxContainer/PanelMenu/MarginContainer/VBoxContainer" unique_id=77840472]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 

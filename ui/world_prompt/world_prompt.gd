@@ -15,6 +15,7 @@ extends CanvasLayer
 @onready var _hold_label: Label = %HoldLabel
 @onready var _spacer: Container = %Spacer
 @onready var _progress: ProgressBar = %HoldProgress
+@onready var _detail_label: Label = %DetailLabel
 
 var _target: Interactable = null
 
@@ -39,6 +40,8 @@ func _process(_delta: float) -> void:
 	if not is_instance_valid(_target):
 		_panel.hide()
 		return
+	
+	_refresh_details()
 
 	var camera: Camera3D = interaction.get_viewport().get_camera_3d()
 	var world_position: Vector3 = _target.get_prompt_position()
@@ -73,7 +76,18 @@ func _on_focus_changed(target: Interactable) -> void:
 	_set_progress(0.0)
 
 	_panel.reset_size() # Shrink to the new content
+	
+	_detail_label.text = ""
+	_refresh_details()
 
+func _refresh_details() -> void:
+	var details: String = _target.get_prompt_details()
+	if _detail_label.text == details:
+		return
+	_detail_label.text = details
+	_detail_label.visible = not details.is_empty()
+	_panel.reset_size()
+	
 func _build_prompt() -> String:
 	var text: String = "[%s] %s" % [_get_input_label(action_name), _target.prompt_text]
 	var action: SecondaryAction = _target.get_secondary_action()

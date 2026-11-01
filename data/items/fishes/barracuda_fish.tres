@@ -8,6 +8,7 @@
 script = ExtResource("1_vi0er")
 id = &"barracuda_fish"
 display_name = "Barracuda"
+description = "Can be sold for a resonnable amount of money. This fish is highly \"visqeux et glissant\""
 world_scene = ExtResource("2_vi0er")
 sellable = true
 sell_value_stat = ExtResource("2_hbk6x")

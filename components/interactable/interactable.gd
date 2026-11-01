@@ -109,6 +109,22 @@ func _make_outline_material(mesh: MeshInstance3D) -> ShaderMaterial:
 func get_hold_duration() -> float:
 	return hold_duration
 
+## World entity id, set by WorldItemSpawner or PlacedItem. -1 if this is not a world item.
+func get_entity_id() -> int:
+	return _body.get_meta(&"entity_id", -1)
+
+## Definition of the world item this interactable belongs to, or null.
+func get_item_definition() -> ItemDefinition:
+	var item: Dictionary = GameState.get_world_item(get_entity_id())
+	if item.is_empty():
+		return null
+	return ItemDatabase.get_definition(item["item_id"])
+
+## Extra line under the prompt (price, stats…). Empty = hidden.
+## Polled every frame by the prompt, so it can show live values.
+func get_prompt_details() -> String:
+	return ""
+	
 ## Presentation hooks, called by PlayerInteraction. Never mutate game state from these.
 func begin_hold(player_id: int) -> void:
 	hold_started.emit(player_id)

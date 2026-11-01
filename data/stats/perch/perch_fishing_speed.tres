@@ -6,6 +6,6 @@
 script = ExtResource("1_fgjvp")
 id = &"perch_fishing_speed"
 display_name = "Fishing speed"
-base_value = 3.0
+base_value = 6.0
 display_format = "%.1fs"
 metadata/_custom_type_script = "uid://djllv0njt17nk"

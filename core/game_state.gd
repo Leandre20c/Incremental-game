@@ -40,11 +40,11 @@ func try_spend(resource_id: StringName, amount: int) -> bool:
 
 #region World items
 
-func spawn_world_item(item_id: StringName, position: Vector3) -> int:
+func spawn_world_item(item_id: StringName, position: Vector3, launch_velocity: Vector3 = Vector3.ZERO) -> int:
 	var entity_id: int = _next_entity_id
 	_next_entity_id += 1
 	_world_items[entity_id] = _new_world_item(item_id, position)
-	EventBus.world_item_spawned.emit(entity_id, item_id, position)
+	EventBus.world_item_spawned.emit(entity_id, item_id, position, launch_velocity)
 	return entity_id
 
 ## For items authored in the level (crates…), not spawned at runtime.
@@ -199,7 +199,7 @@ func from_dict(data: Dictionary) -> void:
 		entry["power_level"] = int(item.get("power_level", 1))
 		entry["powered"] = bool(item.get("powered", true))
 		_world_items[entity_id] = entry
-		EventBus.world_item_spawned.emit(entity_id, item_id, position)
+		EventBus.world_item_spawned.emit(entity_id, item_id, position, Vector3.ZERO)
 
 	_next_entity_id = int(data.get("next_entity_id", 1))
 	

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="StatDefinition" format=3 uid="uid://cppd258bnqans"]
+
+[ext_resource type="Script" uid="uid://djllv0njt17nk" path="res://data/stats/stat_definition.gd" id="1_xmaxx"]
+
+[resource]
+script = ExtResource("1_xmaxx")
+id = &"oil_barrel_fishing_speed"
+display_name = "Fishing speed"
+metadata/_custom_type_script = "uid://djllv0njt17nk"

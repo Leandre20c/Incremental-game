@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpf220767gf0n" path="res://sub_viewport_container.gd" id="1_6vymn"]
 [ext_resource type="Shader" uid="uid://nvji32yp285v" path="res://assets/shaders/psx_post.gdshader" id="1_vwfi5"]
-[ext_resource type="PackedScene" uid="uid://ccrqnpbosvrqa" path="res://features/world/world.tscn" id="2_vwfi5"]
+[ext_resource type="PackedScene" uid="uid://tgpp17r4vnb7" path="res://features/world/oil_station.tscn" id="3_v0ilk"]
 [ext_resource type="PackedScene" uid="uid://cil1b70a3cr05" path="res://ui/computer_menu/computer_menu.tscn" id="4_yibi5"]
 [ext_resource type="PackedScene" uid="uid://ceat1lfpxjtrs" path="res://ui/resource_counter/resource_counter.tscn" id="5_k5wvu"]
 [ext_resource type="PackedScene" uid="uid://bjibvohb036a" path="res://ui/machine_menu/machine_menu.tscn" id="5_xwlw8"]
@@ -35,7 +35,7 @@ handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="World" parent="SubViewportContainer/SubViewport" unique_id=1646113466 instance=ExtResource("2_vwfi5")]
+[node name="OilStation" parent="SubViewportContainer/SubViewport" unique_id=1627997605 instance=ExtResource("3_v0ilk")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2118223018]
 

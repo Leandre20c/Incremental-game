@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6mjbdc34rao3" path="res://data/items/item_definition.gd" id="1_j140j"]
 [ext_resource type="Texture2D" uid="uid://benicuxds4fym" path="res://assets/machines_pictures/low_poly_trampoline.png" id="2_2jbp3"]
 [ext_resource type="PackedScene" uid="uid://c0jwo3m6kd3sl" path="res://features/items/trampoline.tscn" id="2_7h6wu"]
+[ext_resource type="Resource" uid="uid://cpx4wrjr35twh" path="res://data/shop/machines.tres" id="3_0t1t6"]
 
 [resource]
 script = ExtResource("1_j140j")
@@ -14,4 +15,5 @@ world_scene = ExtResource("2_7h6wu")
 placeable = true
 buyable = true
 buy_cost = 500
+shop_category = ExtResource("3_0t1t6")
 metadata/_custom_type_script = "uid://6mjbdc34rao3"
